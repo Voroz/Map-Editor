@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingRect.h" />
+    <ClInclude Include="Flag.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePolygonObject.h" />
     <ClInclude Include="GameRectObject.h" />

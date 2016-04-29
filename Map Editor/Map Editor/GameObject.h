@@ -1,13 +1,7 @@
 #pragma once
 #include "BoundingRect.h"
 #include "SFML/Graphics.hpp"
-
-enum Flag {
-	noFlag = (1 << 0),
-	fallsWhenTouched = (1 << 1),
-	deadly = (1 << 2),
-	outlineOnly = (1 << 3),
-};
+#include "Flag.h"
 
 class GameObject :
 	public virtual BoundingRect

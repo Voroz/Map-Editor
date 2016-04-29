@@ -3,3 +3,40 @@
 ################################################################################
 
 /Map Editor/Release/sfml-window-2.dll
+/Map Editor/Release/sfml-system-2.dll
+/Map Editor/Release/sfml-graphics-2.dll
+/Map Editor/Release/sfgui.dll
+/Map Editor/Release/openal32.dll
+/Map Editor/Map Editor.VC.db
+/Map Editor/Map Editor.VC.VC.opendb
+/Map Editor/Map Editor/imgui.ini
+/Map Editor/Map Editor/Debug/vc140.pdb
+/Map Editor/Map Editor/Debug/vc140.idb
+/Map Editor/Map Editor/Debug/ui.obj.enc
+/Map Editor/Map Editor/Debug/Ui.obj
+/Map Editor/Map Editor/Debug/MapEditor.obj
+/Map Editor/Map Editor/Debug/Map Editor.tlog/Map Editor.lastbuildstate
+/Map Editor/Map Editor/Debug/Map Editor.tlog/link.write.1.tlog
+/Map Editor/Map Editor/Debug/Map Editor.tlog/link.read.1.tlog
+/Map Editor/Map Editor/Debug/Map Editor.tlog/link.command.1.tlog
+/Map Editor/Map Editor/Debug/Map Editor.tlog/CL.write.1.tlog
+/Map Editor/Map Editor/Debug/Map Editor.tlog/CL.read.1.tlog
+/Map Editor/Map Editor/Debug/Map Editor.tlog/CL.command.1.tlog
+/Map Editor/Map Editor/Debug/Map Editor.log
+/Map Editor/Map Editor/Debug/main.obj
+/Map Editor/Map Editor/Debug/imgui_draw.obj
+/Map Editor/Map Editor/Debug/imgui.obj
+/Map Editor/Map Editor/Debug/imgui-SFML.obj
+/Map Editor/Map Editor/Debug/GameRectObject.obj
+/Map Editor/Map Editor/Debug/GamePolygonObject.obj
+/Map Editor/Map Editor/Debug/GameObject.obj
+/Map Editor/Map Editor/Debug/BoundingRect.obj
+/Map Editor/Debug/sfml-window-d-2.dll
+/Map Editor/Debug/sfml-system-d-2.dll
+/Map Editor/Debug/sfml-graphics-d-2.dll
+/Map Editor/Debug/sfgui-d.dll
+/Map Editor/Debug/openal32.dll
+/Map Editor/Debug/Map Editor.pdb
+/Map Editor/Debug/Map Editor.ilk
+/Map Editor/Debug/Map Editor.exe
+/Map Editor/.vs/Map Editor/v14/.suo

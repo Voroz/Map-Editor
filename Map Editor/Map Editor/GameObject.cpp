@@ -2,9 +2,15 @@
 
 GameObject::GameObject(Vector2<float> pos, Vector2<float> size, const int flags){
 	_flags = flags;
+	_position = pos;
+	_width = size.x;
+	_height = size.y;
 }
 GameObject::GameObject(float x, float y, float width, float height, const int flags){
 	_flags = flags;
+	_position = Vector2<float>(x, y);
+	_width = width;
+	_height = height;
 }
 GameObject::~GameObject() {
 	delete _shape;

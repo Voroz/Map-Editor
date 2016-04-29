@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#include "GameRectObject.h"
+#include "GamePolygonObject.h"
 
 using namespace std;
 

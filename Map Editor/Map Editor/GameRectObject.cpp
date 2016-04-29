@@ -25,6 +25,18 @@ GameRectObject::~GameRectObject(){
 	
 }
 
+bool GameRectObject::contains(Vector2<float> point) {
+	float x = point.x;
+	float y = point.y;
+	float aLeft = pos().x + left();
+	float aRight = pos().x + right();
+	float aTop = pos().y + top();
+	float aBottom = pos().y + bottom();
+
+	return (x > aLeft && x < aRight &&
+		y > aTop && y < aBottom);
+}
+
 void GameRectObject::syncShape() {
 	_shape->setPosition(_position.x, _position.y);
 	_shape->setOrigin(_center.x, _center.y);

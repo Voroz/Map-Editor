@@ -23,8 +23,8 @@ int& Ui::flags() {
 	return _flags;
 }
 
-Vector2<int>& Ui::size() {
-	return Vector2<int>(_size[0], _size[1]);
+Vector2<float>& Ui::size() {
+	return Vector2<float>(_size[0], _size[1]);
 }
 
 void Ui::update() {

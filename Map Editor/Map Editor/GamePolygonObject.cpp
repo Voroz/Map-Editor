@@ -1,7 +1,9 @@
 #include "GamePolygonObject.h"
 
-GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, vector<Vector2<float>> pointVector, const int flags) : GameObject(topLeftPos, Vector2<float>(0, 0), flags){
-	_vertices = pointVector;
+GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, Vector2<float> size, const int flags) : GameObject(topLeftPos, size, flags){
+	_vertices.push_back(Vector2<float>(_width, _height));
+	_vertices.push_back(Vector2<float>(0, _height));
+	_vertices.push_back(Vector2<float>(_width / 2, 0));
 	_shape = new sf::ConvexShape(_vertices.size());
 	
 	if (_flags & Flag::outlineOnly) {
@@ -20,6 +22,10 @@ GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, vector<Vector2<f
 
 GamePolygonObject::~GamePolygonObject(){
 	
+}
+
+bool GamePolygonObject::contains(Vector2<float> point) {
+	return false;
 }
 
 void GamePolygonObject::syncShape() {

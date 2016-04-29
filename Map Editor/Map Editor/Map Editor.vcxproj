@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BoundingRect.h" />
+    <ClInclude Include="Controls.h" />
     <ClInclude Include="Flag.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GamePolygonObject.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="imgui-SFML.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapEditor.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Ui.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>

@@ -12,6 +12,7 @@ public:
 	GameObject(float x, float y, float width = 0, float height = 0, const int flags = Flag::noFlag);
 	~GameObject();
 
+	virtual bool contains(Vector2<float> point) = 0;
 	int flags();
 	sf::Shape* shape();
 	virtual void update();

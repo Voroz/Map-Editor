@@ -9,6 +9,7 @@ public:
 	GameRectObject(float x, float y, float width = 0, float height = 0, const int flags = Flag::noFlag);
 	virtual ~GameRectObject();
 
+	bool contains(Vector2<float> point);
 	void syncShape();
 };
 

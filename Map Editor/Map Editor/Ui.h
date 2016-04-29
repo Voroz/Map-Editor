@@ -15,7 +15,7 @@ public:
 	~Ui();
 	int& type();
 	int& flags();
-	Vector2<int>& size();
+	Vector2<float>& size();
 	void update();
 	void render();
 

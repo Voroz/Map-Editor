@@ -9,7 +9,9 @@ Map::~Map(){
 }
 
 void Map::update() {
-
+	for (const auto &i : _gameObjectVector) {
+		i->update();
+	}
 }
 void Map::render() {
 	for (const auto &i : _gameObjectVector) {

@@ -14,6 +14,7 @@ public:
 
 	int flags();
 	sf::Shape* shape();
+	virtual void update();
 
 protected:
 	//Functions

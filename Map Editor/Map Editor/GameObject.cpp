@@ -15,3 +15,7 @@ int GameObject::flags() {
 sf::Shape* GameObject::shape() {
 	return _shape;
 }
+void GameObject::update() {
+
+	syncShape();
+}

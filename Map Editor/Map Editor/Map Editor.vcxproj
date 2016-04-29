@@ -126,6 +126,7 @@
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="Ui.cpp" />
   </ItemGroup>
@@ -135,6 +136,7 @@
     <ClInclude Include="GamePolygonObject.h" />
     <ClInclude Include="GameRectObject.h" />
     <ClInclude Include="imgui-SFML.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="MapEditor.h" />
     <ClInclude Include="Ui.h" />
     <ClInclude Include="Vector2.h" />

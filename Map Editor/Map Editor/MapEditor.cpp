@@ -1,4 +1,5 @@
 #include "MapEditor.h"
+#include "Map.h"
 
 
 MapEditor::MapEditor(){
@@ -10,6 +11,7 @@ void MapEditor::run() {
 	sf::RenderWindow window(sf::VideoMode(1200, 800), "Map Editor");
 	window.setFramerateLimit(60);
 	Ui ui(window);
+	Map map(window);
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -22,8 +24,10 @@ void MapEditor::run() {
 		}
 
 		ui.update();
+		map.update();
 
 		window.clear();
+		map.render();
 		ui.render();
 		window.display();
 	}

@@ -14,14 +14,26 @@ Map::~Map(){
 }
 
 void Map::update() {
+	vector<GameObject*> mouseOnObjectVector = mouseOnObject();
 	//Add new item on mouse click
-	if (_controls->mouse.leftDown == true && mouseOnObject() == false && _ui->mouseOnWindow() == false) {
+	if (_controls->mouse.leftDown == true && mouseOnObjectVector.size() == 0 && _ui->mouseOnWindow() == false) {
 		if (_ui->type() == 0) {
 			_gameObjectVector.push_back(new GameRectObject(_controls->mouse.pos, _ui->size(), _ui->flags()));
 		}
 		else if (_ui->type() == 1) {
 			_gameObjectVector.push_back(new GamePolygonObject(_controls->mouse.pos, _ui->size(), _ui->flags()));
 		}
+	}
+	//Delete items on mouse click
+	if (_controls->mouse.rightDown == true && mouseOnObjectVector.size() > 0 && _ui->mouseOnWindow() == false) {
+		for (int i = 0; i < _gameObjectVector.size(); i++) {
+			for (const auto &j : mouseOnObjectVector) {
+				if (_gameObjectVector[i] == j) {
+					delete _gameObjectVector[i];
+					_gameObjectVector.erase(_gameObjectVector.begin() + i);
+				}
+			}
+		}		
 	}
 	for (const auto &i : _gameObjectVector) {
 		i->update();
@@ -32,11 +44,12 @@ void Map::render() {
 		_window->draw(*i->shape());
 	}
 }
-bool Map::mouseOnObject() {
+vector<GameObject*> Map::mouseOnObject() {
+	vector<GameObject*> tempVector;
 	for (const auto &i : _gameObjectVector) {
 		if (i->contains(_controls->mouse.pos)) {
-			return true;
+			tempVector.push_back(i);
 		}
 	}
-	return false;
+	return tempVector;
 }

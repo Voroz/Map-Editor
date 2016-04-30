@@ -15,7 +15,7 @@ public:
 	~Map();
 	void update();
 	void render();
-	bool mouseOnObject();
+	vector<GameObject*> mouseOnObject();
 
 private:
 	vector<GameObject*> _gameObjectVector;

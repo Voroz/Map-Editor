@@ -32,7 +32,7 @@ void Map::update() {
 	}
 	//Position mouseObject on mouse
 	if (_controls->lShift == true) {
-		_mouseObject->setPos(Vector2<float>(align(_controls->mouse.pos.x, 25), align(_controls->mouse.pos.y, 10)));
+		_mouseObject->setPos(Vector2<float>(align(_controls->mouse.pos.x, 25), align(_controls->mouse.pos.y, 25)));
 	}
 	else {
 		_mouseObject->setPos(_controls->mouse.pos);

@@ -41,6 +41,16 @@ void MapEditor::run() {
 					controls.mouse.rightDown = false;
 				}
 			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::LShift) {
+					controls.lShift = true;
+				}
+			}
+			if (event.type == sf::Event::KeyReleased) {
+				if (event.key.code == sf::Keyboard::LShift) {
+					controls.lShift = false;
+				}
+			}
 		}
 
 		ui.update();

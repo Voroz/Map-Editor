@@ -19,13 +19,18 @@ public:
 	void update();
 	void render();
 	bool mouseOnWindow();
+	bool valueChanged();
 
 private:
+	void saveValues();
 	bool _fallsWhenTouched;
 	bool _deadly;
 	bool _outlineOnly;
 	int _size[2];
 	int _type;
 	int _flags;
+	int _savedFlags;
+	Vector2<float> _savedSize;
+	int _savedType;
 };
 

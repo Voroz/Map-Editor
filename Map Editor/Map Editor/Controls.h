@@ -3,4 +3,5 @@
 
 struct Controls {
 	Mouse mouse;
+	bool lShift = false;
 };

@@ -16,9 +16,11 @@ public:
 	void update();
 	void render();
 	vector<GameObject*> mouseOnObject();
+	int align(int value, int size);
 
 private:
 	vector<GameObject*> _gameObjectVector;
+	GameObject* _mouseObject;
 	sf::RenderWindow *_window;
 	Controls *_controls;
 	Ui *_ui;

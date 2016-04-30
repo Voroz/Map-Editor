@@ -29,5 +29,6 @@ private:
 	MyView *_view;
 	Vector2<float> _worldSize;
 	sf::RectangleShape _worldRectshape;
+	Vector2<float> _savedMousePos;
 };
 

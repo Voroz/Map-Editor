@@ -15,7 +15,7 @@ void MapEditor::run() {
 
 	while (window.isOpen()) {
 		sf::Event event;
-		controls.mouse().setMouseWheel(0);
+		controls.mouse().setWheel(0);
 		while (window.pollEvent(event)) {
 			ImGui::SFML::ProcessEvent(event);
 
@@ -32,6 +32,9 @@ void MapEditor::run() {
 				if (event.key.code == sf::Mouse::Right) {
 					controls.mouse().setRight(true);
 				}
+				if (event.key.code == sf::Mouse::Middle) {
+					controls.mouse().setWheelClick(true);
+				}
 			}
 			if (event.type == sf::Event::MouseButtonReleased) {
 				if (event.key.code == sf::Mouse::Left) {
@@ -40,9 +43,12 @@ void MapEditor::run() {
 				if (event.key.code == sf::Mouse::Right) {
 					controls.mouse().setRight(false);
 				}
+				if (event.key.code == sf::Mouse::Middle) {
+					controls.mouse().setWheelClick(false);
+				}
 			}
 			if (event.type == sf::Event::MouseWheelMoved) {
-				controls.mouse().setMouseWheel(event.mouseWheel.delta);
+				controls.mouse().setWheel(event.mouseWheel.delta);
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::LShift) {

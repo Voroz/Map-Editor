@@ -10,16 +10,19 @@ public:
 	Vector2<float> worldPos();
 	bool left();
 	bool right();
-	int mouseWheel();
+	int wheel();
+	bool wheelClick();
 	void setPos(Vector2<float> pos);
 	void setLeft(bool left);
 	void setRight(bool right);
-	void setMouseWheel(int step);
+	void setWheel(int step);
+	void setWheelClick(bool down);
 
 private:
 	sf::RenderWindow *_window;
 	Vector2<float> _pos;
 	bool _left;
 	bool _right;
-	int _mouseWheel;
+	int _wheel;
+	bool _wheelClick;
 };

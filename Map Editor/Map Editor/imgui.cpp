@@ -58,8 +58,8 @@
  - click and drag on any empty space to move window
  - double-click/double-tap on lower right corner grip to auto-fit to content
  - TAB/SHIFT+TAB to cycle through keyboard editable fields
- - use mouse wheel to scroll
- - use CTRL+mouse wheel to zoom window contents (if IO.FontAllowScaling is true)
+ - use mouse MouseWheel to scroll
+ - use CTRL+mouse MouseWheel to zoom window contents (if IO.FontAllowScaling is true)
  - CTRL+Click on a slider or drag box to input value as text
  - text editor:
    - Hold SHIFT or use mouse to select text.
@@ -471,7 +471,7 @@
  - input text: allow centering/positioning text so that ctrl+clicking Drag or Slider keeps the textual value at the same pixel position.
  - input number: optional range min/max for Input*() functions
  - input number: holding [-]/[+] buttons could increase the step speed non-linearly (or user-controlled)
- - input number: use mouse wheel to step up/down
+ - input number: use mouse MouseWheel to step up/down
  - input number: applying arithmetics ops (+,-,*,/) messes up with text edit undo stack.
  - button: provide a button that looks framed.
  - text: proper alignment options

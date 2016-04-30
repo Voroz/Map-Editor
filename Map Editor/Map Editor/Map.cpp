@@ -24,12 +24,19 @@ Map::~Map(){
 
 void Map::update() {
 	//Zoom view on mouse scroll
-	if (_controls->mouse().mouseWheel() > 0) {
-		_view->zoom(abs(_controls->mouse().mouseWheel()) / 1.2f);
+	if (_controls->mouse().wheel() > 0) {
+		_view->zoom(abs(_controls->mouse().wheel()) / 1.2f);
 	}
-	else if (_controls->mouse().mouseWheel() < 0) {
-		_view->zoom(abs(_controls->mouse().mouseWheel()) * 1.2f);
+	else if (_controls->mouse().wheel() < 0) {
+		_view->zoom(abs(_controls->mouse().wheel()) * 1.2f);
 	}
+
+	//Move view on mouse scroll click
+	if (_controls->mouse().wheelClick() == true && _savedMousePos != _controls->mouse().pos()) {
+		Vector2<float> mouseDiff = _controls->mouse().pos() - _savedMousePos;
+		_view->move(-mouseDiff.x, -mouseDiff.y);
+	}
+	_savedMousePos = _controls->mouse().pos();
 
 	//Delete mouse item if value changed
 	if (_ui->valueChanged()) {
@@ -85,7 +92,9 @@ void Map::render() {
 	for (const auto &i : _gameObjectVector) {
 		_window->draw(*i->shape());
 	}
-	_window->draw(*_mouseObject->shape());
+	if (_ui->mouseOnWindow() == false) {
+		_window->draw(*_mouseObject->shape());
+	}
 	_window->draw(_worldRectshape);
 }
 vector<GameObject*> Map::mouseOnObject() {

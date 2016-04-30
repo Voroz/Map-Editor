@@ -5,7 +5,8 @@ Mouse::Mouse(sf::RenderWindow &window) {
 	_pos = Vector2<float>(0, 0);
 	_left = false;
 	_right = false;
-	_mouseWheel = 0;
+	_wheel = 0;
+	_wheelClick = false;
 }
 Mouse::~Mouse() {
 
@@ -23,8 +24,11 @@ bool Mouse::left() {
 bool Mouse::right() {
 	return _right;
 }
-int Mouse::mouseWheel() {
-	return _mouseWheel;
+int Mouse::wheel() {
+	return _wheel;
+}
+bool Mouse::wheelClick() {
+	return _wheelClick;
 }
 void Mouse::setPos(Vector2<float> pos) {
 	_pos = pos;
@@ -35,6 +39,9 @@ void Mouse::setLeft(bool left) {
 void Mouse::setRight(bool right) {
 	_right = right;
 }
-void Mouse::setMouseWheel(int step) {
-	_mouseWheel = step;
+void Mouse::setWheel(int step) {
+	_wheel = step;
+}
+void Mouse::setWheelClick(bool down) {
+	_wheelClick = down;
 }

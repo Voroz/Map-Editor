@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include <numeric>
 
 using namespace std;
 
@@ -12,6 +13,7 @@ public:
 
 	bool contains(Vector2<float> point);
 	void syncShape();
+	vector<Vector2<float>> vertices();
 
 protected:
 	vector<Vector2<float>> _vertices;

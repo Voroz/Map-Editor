@@ -18,6 +18,7 @@ public:
 	Vector2<float>& size();
 	void update();
 	void render();
+	bool mouseOnWindow();
 
 private:
 	bool _fallsWhenTouched;

@@ -6,8 +6,8 @@ Ui::Ui(sf::RenderWindow& window){
 	_fallsWhenTouched = false;
 	_deadly = false;
 	_outlineOnly = false;
-	_size[0] = 0;
-	_size[1] = 0;
+	_size[0] = 50;
+	_size[1] = 50;
 	_flags = 0;
 	_type = 0;
 }
@@ -43,4 +43,7 @@ void Ui::update() {
 }
 void Ui::render() {
 	ImGui::Render();
+}
+bool Ui::mouseOnWindow() {
+	return ImGui::IsMouseHoveringAnyWindow();
 }

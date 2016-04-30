@@ -15,7 +15,7 @@ Map::~Map(){
 
 void Map::update() {
 	//Add new item on mouse click
-	if (_controls->mouse.leftDown == true && mouseOnObject() == false) {
+	if (_controls->mouse.leftDown == true && mouseOnObject() == false && _ui->mouseOnWindow() == false) {
 		if (_ui->type() == 0) {
 			_gameObjectVector.push_back(new GameRectObject(_controls->mouse.pos, _ui->size(), _ui->flags()));
 		}

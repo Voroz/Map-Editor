@@ -7,6 +7,8 @@ Map::Map(sf::RenderWindow &window, Controls &controls, Ui &ui){
 	_controls = &controls;
 	_ui = &ui;
 	_mouseObject = nullptr;
+	_worldSize = Vector2<float>(8000, 800);
+	_view = new MyView(sf::FloatRect(0, 0, 1200, 800), sf::FloatRect(0, 0, _worldSize.x, _worldSize.y));
 }
 Map::~Map(){
 	for (const auto &i : _gameObjectVector) {
@@ -32,10 +34,10 @@ void Map::update() {
 	}
 	//Position mouseObject on mouse
 	if (_controls->lShift == true) {
-		_mouseObject->setPos(Vector2<float>(align(_controls->mouse.pos.x, 25), align(_controls->mouse.pos.y, 25)));
+		_mouseObject->setPos(Vector2<float>(align(_controls->mouse.pos.x + _view->getCenter().x - _view->getSize().x / 2, 10), align(_controls->mouse.pos.y + _view->getCenter().y - _view->getSize().y / 2, 10)));
 	}
 	else {
-		_mouseObject->setPos(_controls->mouse.pos);
+		_mouseObject->setPos(Vector2<float>(_window->mapPixelToCoords(sf::Vector2i(_controls->mouse.pos.x, _controls->mouse.pos.y)).x, _window->mapPixelToCoords(sf::Vector2i(_controls->mouse.pos.x, _controls->mouse.pos.y)).y));
 	}
 	_mouseObject->update();
 
@@ -66,6 +68,7 @@ void Map::update() {
 	}
 }
 void Map::render() {
+	_window->setView(*_view);
 	for (const auto &i : _gameObjectVector) {
 		_window->draw(*i->shape());
 	}
@@ -74,7 +77,7 @@ void Map::render() {
 vector<GameObject*> Map::mouseOnObject() {
 	vector<GameObject*> tempVector;
 	for (const auto &i : _gameObjectVector) {
-		if (i->contains(_controls->mouse.pos)) {
+		if (i->contains(Vector2<float>(_window->mapPixelToCoords(sf::Vector2i(_controls->mouse.pos.x, _controls->mouse.pos.y)).x, _window->mapPixelToCoords(sf::Vector2i(_controls->mouse.pos.x, _controls->mouse.pos.y)).y))) {
 			tempVector.push_back(i);
 		}
 	}

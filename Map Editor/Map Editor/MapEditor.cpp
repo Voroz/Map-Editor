@@ -9,7 +9,7 @@ MapEditor::~MapEditor(){
 
 void MapEditor::run() {
 	sf::RenderWindow window(sf::VideoMode(1200, 800), "Map Editor");
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(200);
 	Ui ui(window);
 	Controls controls;
 	Map map(window, controls, ui);

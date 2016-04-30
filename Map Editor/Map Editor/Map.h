@@ -4,6 +4,7 @@
 #include "GamePolygonObject.h"
 #include "Controls.h"
 #include "Ui.h"
+#include "MyView.h"
 #include <iostream>
 
 using namespace std;
@@ -24,5 +25,7 @@ private:
 	sf::RenderWindow *_window;
 	Controls *_controls;
 	Ui *_ui;
+	MyView *_view;
+	Vector2<float> _worldSize;
 };
 

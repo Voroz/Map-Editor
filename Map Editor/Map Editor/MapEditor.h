@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include "Ui.h"
+#include "Map.h"
 #include <iostream>
 
 using namespace std;

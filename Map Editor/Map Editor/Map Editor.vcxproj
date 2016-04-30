@@ -119,6 +119,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BoundingRect.cpp" />
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GamePolygonObject.cpp" />
     <ClCompile Include="GameRectObject.cpp" />
@@ -128,6 +129,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapEditor.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="MyView.cpp" />
     <ClCompile Include="Ui.cpp" />
   </ItemGroup>

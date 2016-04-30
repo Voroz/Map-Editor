@@ -48,3 +48,6 @@ void MyView::setCenter(const sf::Vector2f& center) {
 	}
 	sf::View::setCenter(x, y);
 }
+void MyView::zoom(float factor) {
+	sf::View::zoom(factor);
+}

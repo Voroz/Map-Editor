@@ -47,6 +47,23 @@ public:
 	////////////////////////////////////////////////////////////
 	void setCenter(const sf::Vector2f& center);
 
+	////////////////////////////////////////////////////////////
+	/// \brief Resize the view rectangle relatively to its current size
+	///
+	/// Resizing the view simulates a zoom, as the zone displayed on
+	/// screen grows or shrinks.
+	/// \a factor is a multiplier:
+	/// \li 1 keeps the size unchanged
+	/// \li > 1 makes the view bigger (objects appear smaller)
+	/// \li < 1 makes the view smaller (objects appear bigger)
+	///
+	/// \param factor Zoom factor to apply
+	///
+	/// \see setSize, move, rotate
+	///
+	////////////////////////////////////////////////////////////
+	void zoom(float factor);
+
 private:
 	const sf::FloatRect _worldRect;
 };

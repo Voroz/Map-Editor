@@ -18,6 +18,7 @@ public:
 	void render();
 	vector<GameObject*> mouseOnObject();
 	int align(int value, int size);
+	bool isInWorldrect(GameObject* gameObj);
 
 private:
 	vector<GameObject*> _gameObjectVector;
@@ -27,5 +28,6 @@ private:
 	Ui *_ui;
 	MyView *_view;
 	Vector2<float> _worldSize;
+	sf::RectangleShape _worldRectshape;
 };
 

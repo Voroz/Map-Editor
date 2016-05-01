@@ -62,7 +62,7 @@ void MapEditor::run() {
 			}
 		}
 
-		ui.update();
+		ui.update(map.gameObjects());
 		map.update();
 
 		window.clear();

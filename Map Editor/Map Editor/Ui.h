@@ -4,7 +4,11 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include <iostream>
+#include <fstream>
 #include "Flag.h"
+#include "GameObject.h"
+#include "GameRectObject.h"
+#include "GamePolygonObject.h"
 
 using namespace std;
 
@@ -16,7 +20,7 @@ public:
 	int& type();
 	int& flags();
 	Vector2<float>& size();
-	void update();
+	void update(vector<GameObject*> &gameObjectVector);
 	void render();
 	bool mouseOnWindow();
 	bool valueChanged();
@@ -32,5 +36,7 @@ private:
 	int _savedFlags;
 	Vector2<float> _savedSize;
 	int _savedType;
+
+	char _filename[20];
 };
 

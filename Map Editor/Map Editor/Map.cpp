@@ -117,3 +117,6 @@ bool Map::isInWorldrect(GameObject* gameObj) {
 	return (aLeft >= 0 && aRight <= _worldSize.x &&
 		aTop >= 0 && aBottom <= _worldSize.y);
 }
+vector<GameObject*>& Map::gameObjects() {
+	return _gameObjectVector;
+}

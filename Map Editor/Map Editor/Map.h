@@ -19,6 +19,7 @@ public:
 	vector<GameObject*> mouseOnObject();
 	int align(int value, int size);
 	bool isInWorldrect(GameObject* gameObj);
+	vector<GameObject*>& gameObjects();
 
 private:
 	vector<GameObject*> _gameObjectVector;

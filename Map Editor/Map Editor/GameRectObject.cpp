@@ -43,3 +43,7 @@ void GameRectObject::syncShape() {
 	sf::RectangleShape* rectShape = static_cast<sf::RectangleShape*>(_shape);
 	rectShape->setSize(sf::Vector2f(_width, _height));
 }
+
+int GameRectObject::identify() {
+	return 0;
+}

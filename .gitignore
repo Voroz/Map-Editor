@@ -40,3 +40,30 @@
 /Map Editor/Debug/Map Editor.ilk
 /Map Editor/Debug/Map Editor.exe
 /Map Editor/.vs/Map Editor/v14/.suo
+/Map Editor/Release/Map Editor.pdb
+/Map Editor/Release/Map Editor.ipdb
+/Map Editor/Release/Map Editor.iobj
+/Map Editor/Release/Map Editor.exe
+/Map Editor/Map Editor/Release/vc140.pdb
+/Map Editor/Map Editor/Release/Ui.obj
+/Map Editor/Map Editor/Release/MyView.obj
+/Map Editor/Map Editor/Release/Mouse.obj
+/Map Editor/Map Editor/Release/MapEditor.obj
+/Map Editor/Map Editor/Release/Map.obj
+/Map Editor/Map Editor/Release/Map Editor.tlog/Map Editor.lastbuildstate
+/Map Editor/Map Editor/Release/Map Editor.tlog/link.write.1.tlog
+/Map Editor/Map Editor/Release/Map Editor.tlog/link.read.1.tlog
+/Map Editor/Map Editor/Release/Map Editor.tlog/link.command.1.tlog
+/Map Editor/Map Editor/Release/Map Editor.tlog/CL.write.1.tlog
+/Map Editor/Map Editor/Release/Map Editor.tlog/CL.read.1.tlog
+/Map Editor/Map Editor/Release/Map Editor.tlog/CL.command.1.tlog
+/Map Editor/Map Editor/Release/Map Editor.log
+/Map Editor/Map Editor/Release/main.obj
+/Map Editor/Map Editor/Release/imgui_draw.obj
+/Map Editor/Map Editor/Release/imgui.obj
+/Map Editor/Map Editor/Release/imgui-SFML.obj
+/Map Editor/Map Editor/Release/GameRectObject.obj
+/Map Editor/Map Editor/Release/GamePolygonObject.obj
+/Map Editor/Map Editor/Release/GameObject.obj
+/Map Editor/Map Editor/Release/Controls.obj
+/Map Editor/Map Editor/Release/BoundingRect.obj

@@ -113,3 +113,7 @@ vector<Vector2<float>> GamePolygonObject::vertices() {
 	}
 	return adjustedVertices;
 }
+
+int GamePolygonObject::identify() {
+	return 1;
+}

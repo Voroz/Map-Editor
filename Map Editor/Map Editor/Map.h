@@ -16,9 +16,14 @@ public:
 	~Map();
 	void update();
 	void render();
+	void sync();
 	vector<GameObject*> mouseOnObject();
 	int align(int value, int size);
 	bool isInWorldrect(GameObject* gameObj);
+	bool isInWorldXrect(GameObject* gameObj);
+	bool isInWorldYrect(GameObject* gameObj);
+	void matchWorldXToObjects();
+	void matchWorldYToObjects();
 	vector<GameObject*>& gameObjects();
 
 private:
@@ -28,7 +33,7 @@ private:
 	Controls *_controls;
 	Ui *_ui;
 	MyView *_view;
-	Vector2<float> _worldSize;
+	Vector2<int*> _worldSize;
 	sf::RectangleShape _worldRectshape;
 	Vector2<float> _savedMousePos;
 };

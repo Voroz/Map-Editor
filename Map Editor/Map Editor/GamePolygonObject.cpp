@@ -13,11 +13,7 @@ GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, Vector2<float> s
 		_shape->setFillColor(sf::Color(0, 0, 0));
 	}
 
-	//Sync shape
-	sf::ConvexShape *convexShape = static_cast<sf::ConvexShape*>(_shape);
-	for (int i = 0; i < _vertices.size(); i++) {
-		convexShape->setPoint(i, sf::Vector2f(_vertices[i].x, _vertices[i].y));
-	}
+	syncShape();
 };
 
 GamePolygonObject::~GamePolygonObject(){
@@ -101,7 +97,15 @@ bool GamePolygonObject::contains(Vector2<float> point) {
 	return false;
 }
 
+void GamePolygonObject::update() {
+	GameObject::update();
+}
+
 void GamePolygonObject::syncShape() {
+	sf::ConvexShape *convexShape = static_cast<sf::ConvexShape*>(_shape);
+	for (int i = 0; i < _vertices.size(); i++) {
+		convexShape->setPoint(i, sf::Vector2f(_vertices[i].x, _vertices[i].y));
+	}
 	_shape->setPosition(_position.x, _position.y);
 	_shape->setOrigin(_center.x, _center.y);
 }

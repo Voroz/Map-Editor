@@ -6,8 +6,10 @@ Ui::Ui(sf::RenderWindow& window){
 	_fallsWhenTouched = false;
 	_deadly = false;
 	_outlineOnly = false;
-	_size[0] = 50;
-	_size[1] = 50;
+	_objectSize[0] = 50;
+	_objectSize[1] = 50;
+	_worldSize[0] = 8000;
+	_worldSize[1] = 800;
 	_flags = 0;
 	_type = 0;
 	saveValues();
@@ -26,8 +28,12 @@ int& Ui::flags() {
 	return _flags;
 }
 
-Vector2<float>& Ui::size() {
-	return Vector2<float>(_size[0], _size[1]);
+Vector2<float>& Ui::objectSize() {
+	return Vector2<float>(_objectSize[0], _objectSize[1]);
+}
+
+int* Ui::worldSize() {
+	return _worldSize;
 }
 
 void Ui::update(vector<GameObject*> &gameObjectVector) {
@@ -80,7 +86,8 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 	ImGui::End();
 	
 	ImGui::Begin("GUI");
-	ImGui::InputInt2("Size", _size);
+	ImGui::InputInt2("worldSize", _worldSize);
+	ImGui::InputInt2("objectSize", _objectSize);
 	ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);
 	ImGui::Checkbox("deadly", &_deadly);
 	ImGui::Checkbox("outlineOnly", &_outlineOnly);
@@ -98,9 +105,14 @@ bool Ui::mouseOnWindow() {
 }
 void Ui::saveValues() {
 	_savedFlags = flags();
-	_savedSize = size();
+	_savedObjectSize = objectSize();
 	_savedType = type();
+	_savedWorldSize.x = _worldSize[0];
+	_savedWorldSize.y = _worldSize[1];
 }
-bool Ui::valueChanged() {
-	return (_flags != _savedFlags || Vector2<float>(_size[0], _size[1]) != _savedSize || _type != _savedType);
+bool Ui::objectValueChanged() {
+	return (_flags != _savedFlags || Vector2<float>(_objectSize[0], _objectSize[1]) != _savedObjectSize || _type != _savedType);
+}
+bool Ui::worldValueChanged() {
+	return (Vector2<float>(_worldSize[0], _worldSize[1]) != _savedWorldSize);
 }

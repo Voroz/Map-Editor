@@ -13,6 +13,7 @@ public:
 
 	bool contains(Vector2<float> point);
 	void syncShape();
+	void update();
 	vector<Vector2<float>> vertices();
 	int identify();
 

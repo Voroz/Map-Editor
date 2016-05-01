@@ -7,13 +7,14 @@ Map::Map(sf::RenderWindow &window, Controls &controls, Ui &ui){
 	_controls = &controls;
 	_ui = &ui;
 	_mouseObject = nullptr;
-	_worldSize = Vector2<float>(8000, 800);
-	_worldRectshape.setSize(sf::Vector2f(_worldSize.x, _worldSize.y));
+	_worldSize.x = &_ui->worldSize()[0];
+	_worldSize.y = &_ui->worldSize()[1];
+	//_worldRectshape.setSize(sf::Vector2f(_worldSize->x, _worldSize->y));
 	_worldRectshape.setPosition(0, 0);
 	_worldRectshape.setOutlineThickness(4);
 	_worldRectshape.setFillColor(sf::Color::Transparent);
 	_worldRectshape.setOutlineColor(sf::Color::Red);
-	_view = new MyView(sf::FloatRect(0, 0, 1200, 800), sf::FloatRect(0, 0, _worldSize.x, _worldSize.y));
+	_view = new MyView(sf::FloatRect(0, 0, 1200, 800), sf::FloatRect(0, 0, *_worldSize.x, *_worldSize.y));
 }
 Map::~Map(){
 	for (const auto &i : _gameObjectVector) {
@@ -39,17 +40,17 @@ void Map::update() {
 	_savedMousePos = _controls->mouse().pos();
 
 	//Delete mouse item if value changed
-	if (_ui->valueChanged()) {
+	if (_ui->objectValueChanged()) {
 		delete _mouseObject;
 		_mouseObject = nullptr;
 	}
 	//New mouse object if we have none
 	if (_mouseObject == nullptr) {
 		if (_ui->type() == 0) {
-			_mouseObject = new GameRectObject(_controls->mouse().worldPos(), _ui->size(), _ui->flags());
+			_mouseObject = new GameRectObject(_controls->mouse().worldPos(), _ui->objectSize(), _ui->flags());
 		}
 		else if (_ui->type() == 1) {
-			_mouseObject = new GamePolygonObject(_controls->mouse().worldPos(), _ui->size(), _ui->flags());
+			_mouseObject = new GamePolygonObject(_controls->mouse().worldPos(), _ui->objectSize(), _ui->flags());
 		}
 	}
 	//Position mouseObject on mouse
@@ -65,10 +66,10 @@ void Map::update() {
 	//Add new item on mouse click
 	if (_controls->mouse().left() == true && mouseOnObjectVector.size() == 0 && _ui->mouseOnWindow() == false && isInWorldrect(_mouseObject)) {
 		if (_ui->type() == 0) {
-			_gameObjectVector.push_back(new GameRectObject(_mouseObject->pos(), _ui->size(), _ui->flags()));
+			_gameObjectVector.push_back(new GameRectObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
 		}
 		else if (_ui->type() == 1) {
-			_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->size(), _ui->flags()));
+			_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
 		}
 	}
 
@@ -86,6 +87,19 @@ void Map::update() {
 	for (const auto &i : _gameObjectVector) {
 		i->update();
 	}
+
+	//Match world rect to objects if world rect became too small.
+	for (auto &i : _gameObjectVector) {
+		if (isInWorldXrect(i) == false) {
+			matchWorldXToObjects();
+		}
+		if (isInWorldYrect(i) == false) {
+			matchWorldYToObjects();
+		}
+	}
+
+	//Sync world rect.
+	sync();
 }
 void Map::render() {
 	_window->setView(*_view);
@@ -106,6 +120,9 @@ vector<GameObject*> Map::mouseOnObject() {
 	}
 	return tempVector;
 }
+void Map::sync() {
+	_worldRectshape.setSize(sf::Vector2f(*_worldSize.x, *_worldSize.y));
+}
 int Map::align(int value, int size){
 	return (value / size)*size + (float)size / 2;
 }
@@ -114,8 +131,38 @@ bool Map::isInWorldrect(GameObject* gameObj) {
 	float aRight = gameObj->pos().x + gameObj->right();
 	float aTop = gameObj->pos().y + gameObj->top();
 	float aBottom = gameObj->pos().y + gameObj->bottom();
-	return (aLeft >= 0 && aRight <= _worldSize.x &&
-		aTop >= 0 && aBottom <= _worldSize.y);
+	return (aLeft >= 0 && aRight <= *_worldSize.x &&
+		aTop >= 0 && aBottom <= *_worldSize.y);
+}
+bool Map::isInWorldXrect(GameObject* gameObj) {
+	float aLeft = gameObj->pos().x + gameObj->left();
+	float aRight = gameObj->pos().x + gameObj->right();
+	return (aLeft >= 0 && aRight <= *_worldSize.x);
+}
+bool Map::isInWorldYrect(GameObject* gameObj) {
+	float aTop = gameObj->pos().y + gameObj->top();
+	float aBottom = gameObj->pos().y + gameObj->bottom();
+	return (aTop >= 0 && aBottom <= *_worldSize.y);
+}
+void Map::matchWorldXToObjects() {
+	float max = 0;
+	for (auto &i : _gameObjectVector) {
+		float x = i->pos().x + i->right();
+		if (x > max) {
+			max = x;
+		}
+	}
+	*_worldSize.x = max;
+}
+void Map::matchWorldYToObjects() {
+	float max = 0;
+	for (auto &i : _gameObjectVector) {
+		float y = i->pos().y + i->bottom();
+		if (y > max) {
+			max = y;
+		}
+	}
+	*_worldSize.y = max;
 }
 vector<GameObject*>& Map::gameObjects() {
 	return _gameObjectVector;

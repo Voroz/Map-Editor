@@ -19,23 +19,27 @@ public:
 	~Ui();
 	int& type();
 	int& flags();
-	Vector2<float>& size();
+	Vector2<float>& objectSize();
+	int* worldSize();
 	void update(vector<GameObject*> &gameObjectVector);
 	void render();
 	bool mouseOnWindow();
-	bool valueChanged();
+	bool objectValueChanged();
+	bool worldValueChanged();
 
 private:
 	void saveValues();
 	bool _fallsWhenTouched;
 	bool _deadly;
 	bool _outlineOnly;
-	int _size[2];
+	int _objectSize[2];
 	int _type;
 	int _flags;
+	int _worldSize[2];
 	int _savedFlags;
-	Vector2<float> _savedSize;
+	Vector2<float> _savedObjectSize;
 	int _savedType;
+	Vector2<float> _savedWorldSize;
 
 	char _filename[20];
 };

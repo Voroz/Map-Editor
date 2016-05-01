@@ -21,6 +21,9 @@ public:
 	int& flags();
 	Vector2<float>& objectSize();
 	int* worldSize();
+	float* point1();
+	float* point2();
+	float* point3();
 	void setTooltip(string tooltip);
 	void update(vector<GameObject*> &gameObjectVector);
 	void render();
@@ -33,6 +36,9 @@ private:
 	bool _deadly;
 	bool _outlineOnly;
 	int _objectSize[2];
+	float _point1[2];
+	float _point2[2];
+	float _point3[2];
 	int _type;
 	int _flags;
 	int _worldSize[2];
@@ -40,6 +46,9 @@ private:
 	int _savedFlags;
 	Vector2<float> _savedObjectSize;
 	int _savedType;
+	float _savedPoint1[2];
+	float _savedPoint2[2];
+	float _savedPoint3[2];
 
 	char _filename[20];
 };

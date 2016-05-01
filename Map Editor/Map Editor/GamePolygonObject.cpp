@@ -1,9 +1,12 @@
 #include "GamePolygonObject.h"
 
-GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, Vector2<float> size, const int flags) : GameObject(topLeftPos, size, flags){
-	_vertices.push_back(Vector2<float>(_width, _height));
-	_vertices.push_back(Vector2<float>(0, _height));
-	_vertices.push_back(Vector2<float>(_width / 2, 0));
+GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, Vector2<float> size, Vector2<float> point1Offset, Vector2<float> point2Offset, Vector2<float> point3Offset, const int flags) : GameObject(topLeftPos, size, flags){
+	_point1Offset = point1Offset;
+	_point2Offset = point2Offset;
+	_point3Offset = point3Offset;
+	_vertices.push_back(Vector2<float>(_width * _point1Offset.x, _height * _point1Offset.y));
+	_vertices.push_back(Vector2<float>(_width * _point2Offset.x, _height * _point2Offset.y));
+	_vertices.push_back(Vector2<float>(_width * _point3Offset.x, _height * _point3Offset.y));
 	_shape = new sf::ConvexShape(_vertices.size());
 	
 	if (_flags & Flag::outlineOnly) {
@@ -95,6 +98,16 @@ bool GamePolygonObject::contains(Vector2<float> point) {
 		}
 	}
 	return false;
+}
+
+Vector2<float> GamePolygonObject::point1Offset() {
+	return _point1Offset;
+}
+Vector2<float> GamePolygonObject::point2Offset() {
+	return _point2Offset;
+}
+Vector2<float> GamePolygonObject::point3Offset() {
+	return _point3Offset;
 }
 
 void GamePolygonObject::update() {

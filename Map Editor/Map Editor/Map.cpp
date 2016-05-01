@@ -50,7 +50,8 @@ void Map::update() {
 			_mouseObject = new GameRectObject(_controls->mouse().worldPos(), _ui->objectSize(), _ui->flags());
 		}
 		else if (_ui->type() == 1) {
-			_mouseObject = new GamePolygonObject(_controls->mouse().worldPos(), _ui->objectSize(), _ui->flags());
+			_mouseObject = new GamePolygonObject(_controls->mouse().worldPos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags());
 		}
 	}
 	//Position mouseObject on mouse
@@ -69,7 +70,8 @@ void Map::update() {
 			_gameObjectVector.push_back(new GameRectObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
 		}
 		else if (_ui->type() == 1) {
-			_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
+			_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags()));
 		}
 	}
 

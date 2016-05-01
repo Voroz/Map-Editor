@@ -58,7 +58,7 @@ void Map::update() {
 		_mouseObject->setPos(Vector2<float>(align(_controls->mouse().worldPos().x, 10), align(_controls->mouse().worldPos().y, 10)));
 	}
 	else {
-		_mouseObject->setPos(_controls->mouse().worldPos());
+		_mouseObject->setPos((int)_controls->mouse().worldPos().x, (int)_controls->mouse().worldPos().y);
 	}
 	_mouseObject->update();
 
@@ -97,6 +97,9 @@ void Map::update() {
 			matchWorldYToObjects();
 		}
 	}
+
+	//Set mouseObject coordinate tooltip
+	_ui->setTooltip(to_string((int)_mouseObject->pos().x) + ", " + to_string((int)_mouseObject->pos().y));
 
 	//Sync world rect.
 	sync();

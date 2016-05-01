@@ -35,10 +35,17 @@ Vector2<float>& Ui::objectSize() {
 int* Ui::worldSize() {
 	return _worldSize;
 }
+void Ui::setTooltip(string tooltip) {
+	strcpy_s(_tooltip, tooltip.c_str());
+}
 
 void Ui::update(vector<GameObject*> &gameObjectVector) {
 	ImGui::SFML::Update();
 	saveValues();
+
+	ImGui::BeginTooltip();
+	ImGui::SetTooltip(_tooltip);
+	ImGui::EndTooltip();
 
 	ImGui::Begin("Filehandler");
 	if (ImGui::SmallButton("save")) {
@@ -111,12 +118,7 @@ void Ui::saveValues() {
 	_savedFlags = flags();
 	_savedObjectSize = objectSize();
 	_savedType = type();
-	_savedWorldSize.x = _worldSize[0];
-	_savedWorldSize.y = _worldSize[1];
 }
 bool Ui::objectValueChanged() {
 	return (_flags != _savedFlags || Vector2<float>(_objectSize[0], _objectSize[1]) != _savedObjectSize || _type != _savedType);
-}
-bool Ui::worldValueChanged() {
-	return (Vector2<float>(_worldSize[0], _worldSize[1]) != _savedWorldSize);
 }

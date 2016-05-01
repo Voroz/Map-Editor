@@ -21,11 +21,11 @@ public:
 	int& flags();
 	Vector2<float>& objectSize();
 	int* worldSize();
+	void setTooltip(string tooltip);
 	void update(vector<GameObject*> &gameObjectVector);
 	void render();
 	bool mouseOnWindow();
 	bool objectValueChanged();
-	bool worldValueChanged();
 
 private:
 	void saveValues();
@@ -36,10 +36,10 @@ private:
 	int _type;
 	int _flags;
 	int _worldSize[2];
+	char _tooltip[40];
 	int _savedFlags;
 	Vector2<float> _savedObjectSize;
 	int _savedType;
-	Vector2<float> _savedWorldSize;
 
 	char _filename[20];
 };

@@ -47,6 +47,7 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 			strcat_s(_filename, ".txt");
 		}
 		myfile.open(_filename);
+		myfile << _worldSize[0] << "," << _worldSize[1] << "\n";
 		for (auto &i : gameObjectVector) {
 			myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "," << i->flags() << "\n";
 		}
@@ -64,13 +65,16 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 			}
 			gameObjectVector.clear();
 
+
+			char ch;
 			int itemType;
 			Vector2<float> pos;
 			float width;
 			float height;
 			int flags;
+
+			myfile >> _worldSize[0] >> ch >> _worldSize[1];
 			while (!myfile.eof()) {
-				char ch;
 				myfile >> itemType >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >> flags;
 				if (itemType == 0) {
 					gameObjectVector.push_back(new GameRectObject(pos.x, pos.y, width, height, flags));

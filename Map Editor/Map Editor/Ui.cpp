@@ -6,6 +6,7 @@ Ui::Ui(sf::RenderWindow& window){
 	_fallsWhenTouched = false;
 	_deadly = false;
 	_outlineOnly = false;
+	_invertsGravity = false;
 	_objectSize[0] = 50;
 	_objectSize[1] = 50;
 	_worldSize[0] = 8000;
@@ -145,11 +146,12 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 	ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);
 	ImGui::Checkbox("deadly", &_deadly);
 	ImGui::Checkbox("outlineOnly", &_outlineOnly);
+	ImGui::Checkbox("invertsGravity", &_invertsGravity);
 	ImGui::RadioButton("Rectangle", &_type, 0);
 	ImGui::RadioButton("Triangle", &_type, 1);
 	ImGui::End();
 
-	_flags = _fallsWhenTouched * Flag::fallsWhenTouched | _deadly * Flag::deadly | _outlineOnly * Flag::outlineOnly;
+	_flags = _fallsWhenTouched * Flag::fallsWhenTouched | _deadly * Flag::deadly | _outlineOnly * Flag::outlineOnly | _invertsGravity * Flag::invertsGravity;
 }
 void Ui::render() {
 	ImGui::Render();

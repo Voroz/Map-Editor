@@ -35,6 +35,7 @@ private:
 	bool _fallsWhenTouched;
 	bool _deadly;
 	bool _outlineOnly;
+	bool _invertsGravity;
 	int _objectSize[2];
 	float _point1[2];
 	float _point2[2];

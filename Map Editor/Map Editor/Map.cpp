@@ -9,7 +9,7 @@ Map::Map(sf::RenderWindow &window, Controls &controls, Ui &ui){
 	_mouseObject = nullptr;
 	_worldSize.x = &_ui->worldSize()[0];
 	_worldSize.y = &_ui->worldSize()[1];
-	//_worldRectshape.setSize(sf::Vector2f(_worldSize->x, _worldSize->y));
+	_worldRectshape.setSize(sf::Vector2f(*_worldSize.x, *_worldSize.y));
 	_worldRectshape.setPosition(0, 0);
 	_worldRectshape.setOutlineThickness(4);
 	_worldRectshape.setFillColor(sf::Color::Transparent);
@@ -56,7 +56,7 @@ void Map::update() {
 	}
 	//Position mouseObject on mouse
 	if (_controls->lShift() == true) {
-		_mouseObject->setPos(Vector2<float>(align(_controls->mouse().worldPos().x, 10), align(_controls->mouse().worldPos().y, 10)));
+		_mouseObject->setPos(Vector2<float>(align(_controls->mouse().worldPos().x, 5), align(_controls->mouse().worldPos().y, 5)));
 	}
 	else {
 		_mouseObject->setPos((int)_controls->mouse().worldPos().x, (int)_controls->mouse().worldPos().y);
@@ -129,7 +129,7 @@ void Map::sync() {
 	_worldRectshape.setSize(sf::Vector2f(*_worldSize.x, *_worldSize.y));
 }
 int Map::align(int value, int size){
-	return (value / size)*size + (float)size / 2;
+	return (value / size)*size;
 }
 bool Map::isInWorldrect(GameObject* gameObj) {
 	float aLeft = gameObj->pos().x + gameObj->left();

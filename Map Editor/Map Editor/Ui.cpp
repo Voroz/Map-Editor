@@ -67,10 +67,13 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 	ImGui::Begin("Filehandler");
 	if (ImGui::SmallButton("save")) {
 		ofstream myfile;
+		char* newFilename = new char[45];
 		if (!strchr(_filename, '.')) {
 			strcat_s(_filename, ".txt");
 		}
-		myfile.open(_filename);
+		strcpy_s(newFilename, 21, "C:/Users/Jonny/Maps/");
+		strcat_s(newFilename, 45, _filename);
+		myfile.open(newFilename);
 		myfile << _worldSize[0] << "," << _worldSize[1] << "\n";
 		for (auto &i : gameObjectVector) {
 			if (i->identify() == 0) {
@@ -83,14 +86,18 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 					j->point3Offset().x << "," << j->point3Offset().y << "," << j->flags() << "\n";
 			}
 		}
+		delete newFilename;
 		myfile.close();
 	}
 	if (ImGui::SmallButton("load")) {
 		ifstream myfile;
+		char* newFilename = new char[45];
 		if (!strchr(_filename, '.')) {
 			strcat_s(_filename, ".txt");
 		}
-		myfile.open(_filename);
+		strcpy_s(newFilename, 21, "C:/Users/Jonny/Maps/");
+		strcat_s(newFilename, 45, _filename);
+		myfile.open(newFilename);
 		if (myfile.is_open()) {
 			for (auto &i : gameObjectVector) {
 				delete i;
@@ -121,6 +128,7 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 					gameObjectVector.push_back(new GamePolygonObject(pos, Vector2<float>(width, height), point1Offset, point2Offset, point3Offset, flags));
 				}
 			}
+			delete newFilename;
 			myfile.close();
 		}
 	}

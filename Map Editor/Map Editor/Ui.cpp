@@ -146,17 +146,22 @@ void Ui::update(deque<GameObject*> &gameObjectVector) {
 	ImGui::Begin("GUI");
 	ImGui::InputInt2("worldSize", _worldSize);
 	ImGui::InputInt2("objectSize", _objectSize);
-	ImGui::Text("Triangle point offsets:");
-	ImGui::SliderFloat2("Point 1", _point1, 0, 1);
-	ImGui::SliderFloat2("Point 2", _point2, 0, 1);
-	ImGui::SliderFloat2("Point 3", _point3, 0, 1);
-	ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);
-	ImGui::Checkbox("deadly", &_deadly);
-	ImGui::Checkbox("outlineOnly", &_outlineOnly);
-	ImGui::Checkbox("invertsGravity", &_invertsGravity);
 	ImGui::RadioButton("Rectangle", &_type, 0);
 	ImGui::RadioButton("Triangle", &_type, 1);
 	ImGui::RadioButton("Player", &_type, 2);
+	if (_type == 0 || _type == 1) {
+		ImGui::Text("\n");
+		ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);
+		ImGui::Checkbox("deadly", &_deadly);
+		ImGui::Checkbox("outlineOnly", &_outlineOnly);
+		ImGui::Checkbox("invertsGravity", &_invertsGravity);
+	}
+	if (_type == 1) {
+		ImGui::Text("\nTriangle point offsets:");
+		ImGui::SliderFloat2("Point 1", _point1, 0, 1);
+		ImGui::SliderFloat2("Point 2", _point2, 0, 1);
+		ImGui::SliderFloat2("Point 3", _point3, 0, 1);
+	}
 	ImGui::End();
 
 	_flags = _fallsWhenTouched * Flag::fallsWhenTouched | _deadly * Flag::deadly | _outlineOnly * Flag::outlineOnly | _invertsGravity * Flag::invertsGravity;

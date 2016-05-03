@@ -52,6 +52,7 @@ private:
 	float _savedPoint1[2];
 	float _savedPoint2[2];
 	float _savedPoint3[2];
+	bool _opened;
 
 	char _filename[20];
 };

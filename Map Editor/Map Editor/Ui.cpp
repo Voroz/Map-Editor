@@ -132,7 +132,7 @@ void Ui::update(deque<GameObject*> &gameObjectVector) {
 					gameObjectVector.push_back(new GamePolygonObject(pos, Vector2<float>(width, height), point1Offset, point2Offset, point3Offset, flags));
 				}
 				if (itemType == 2) {
-					myfile >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >> flags;
+					myfile >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height;
 					gameObjectVector.push_front(new Player(pos.x, pos.y, width, height));
 				}
 			}

@@ -24,21 +24,6 @@ Map::~Map(){
 }
 
 void Map::update() {
-	//Zoom view on mouse scroll
-	if (_controls->mouse().wheel() > 0) {
-		_view->zoom(abs(_controls->mouse().wheel()) / 1.2f);
-	}
-	else if (_controls->mouse().wheel() < 0) {
-		_view->zoom(abs(_controls->mouse().wheel()) * 1.2f);
-	}
-
-	//Move view on mouse scroll click
-	if (_controls->mouse().wheelClick() == true && _savedMousePos != _controls->mouse().pos()) {
-		Vector2<float> mouseDiff = _controls->mouse().pos() - _savedMousePos;
-		_view->move(-mouseDiff.x * _view->currentZoom(), -mouseDiff.y * _view->currentZoom());
-	}
-	_savedMousePos = _controls->mouse().pos();
-
 	//Delete mouse item if value changed
 	if (_ui->objectValueChanged()) {
 		delete _mouseObject;
@@ -64,38 +49,55 @@ void Map::update() {
 	else {
 		_mouseObject->setPos((int)_controls->mouse().worldPos().x, (int)_controls->mouse().worldPos().y);
 	}
-	_mouseObject->update();
 
-	deque<GameObject*> mouseOnObjectVector = mouseOnObject();
-	//Add new item on mouse click
-	if (_controls->mouse().left() == true && mouseOnObjectVector.size() == 0 && _ui->mouseOnWindow() == false && isInWorldrect(_mouseObject)) {
-		if (_ui->type() == 0) {
-			_gameObjectVector.push_back(new GameRectObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
+	if (_ui->mouseOnWindow() == false) {
+		//Zoom view on mouse scroll
+		if (_controls->mouse().wheel() > 0) {
+			_view->zoom(abs(_controls->mouse().wheel()) / 1.2f);
 		}
-		else if (_ui->type() == 1) {
-			_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
-				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags()));
+		else if (_controls->mouse().wheel() < 0) {
+			_view->zoom(abs(_controls->mouse().wheel()) * 1.2f);
 		}
-		else if (_ui->type() == 2 && !objectTypeExists(2)) {
-			_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize()));
-		}
-	}
 
-	//Delete items on mouse click
-	if (_controls->mouse().right() == true && mouseOnObjectVector.size() > 0 && _ui->mouseOnWindow() == false) {
-		for (int i = 0; i < _gameObjectVector.size(); i++) {
-			for (const auto &j : mouseOnObjectVector) {
-				if (_gameObjectVector[i] == j) {
-					delete _gameObjectVector[i];
-					_gameObjectVector[i] = nullptr;
-					_gameObjectVector.erase(_gameObjectVector.begin() + i);
+		//Move view on mouse scroll click
+		if (_controls->mouse().wheelClick() == true && _savedMousePos != _controls->mouse().pos()) {
+			Vector2<float> mouseDiff = _controls->mouse().pos() - _savedMousePos;
+			_view->move(-mouseDiff.x * _view->currentZoom(), -mouseDiff.y * _view->currentZoom());
+		}
+
+		deque<GameObject*> mouseOnObjectVector = mouseOnObject();
+		//Add new item on mouse click
+		if (_controls->mouse().left() == true && mouseOnObjectVector.size() == 0 && isInWorldrect(_mouseObject)) {
+			if (_ui->type() == 0) {
+				_gameObjectVector.push_back(new GameRectObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
+			}
+			else if (_ui->type() == 1) {
+				_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+					Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags()));
+			}
+			else if (_ui->type() == 2 && !objectTypeExists(2)) {
+				_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize()));
+			}
+		}
+
+		//Delete items on mouse click
+		if (_controls->mouse().right() == true && mouseOnObjectVector.size() > 0) {
+			for (int i = 0; i < _gameObjectVector.size(); i++) {
+				for (const auto &j : mouseOnObjectVector) {
+					if (_gameObjectVector[i] == j) {
+						delete _gameObjectVector[i];
+						_gameObjectVector[i] = nullptr;
+						_gameObjectVector.erase(_gameObjectVector.begin() + i);
+					}
 				}
 			}
-		}		
+		}
 	}
+
 	for (const auto &i : _gameObjectVector) {
 		i->update();
 	}
+	_mouseObject->update();
 
 	//Match world rect to objects if world rect became too small.
 	for (auto &i : _gameObjectVector) {
@@ -112,6 +114,8 @@ void Map::update() {
 
 	//Sync world rect.
 	sync();
+
+	_savedMousePos = _controls->mouse().pos();
 }
 void Map::render() {
 	_window->setView(*_view);

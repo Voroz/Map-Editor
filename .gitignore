@@ -69,3 +69,5 @@
 /Map Editor/Map Editor/Release/BoundingRect.obj
 /Map Editor/Map Editor/Debug/Player.obj
 /Map Editor/Map Editor/Release/Player.obj
+/Map Editor/Map Editor/Release/imgui_demo.obj
+/Map Editor/Release/imgui.ini

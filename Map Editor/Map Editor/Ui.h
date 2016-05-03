@@ -5,10 +5,12 @@
 #include "imgui-SFML.h"
 #include <iostream>
 #include <fstream>
+#include <deque>
 #include "Flag.h"
 #include "GameObject.h"
 #include "GameRectObject.h"
 #include "GamePolygonObject.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -25,7 +27,7 @@ public:
 	float* point2();
 	float* point3();
 	void setTooltip(string tooltip);
-	void update(vector<GameObject*> &gameObjectVector);
+	void update(deque<GameObject*> &gameObjectVector);
 	void render();
 	bool mouseOnWindow();
 	bool objectValueChanged();

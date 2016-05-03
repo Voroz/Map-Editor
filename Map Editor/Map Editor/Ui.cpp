@@ -57,7 +57,7 @@ void Ui::setTooltip(string tooltip) {
 	strcpy_s(_tooltip, tooltip.c_str());
 }
 
-void Ui::update(vector<GameObject*> &gameObjectVector) {
+void Ui::update(deque<GameObject*> &gameObjectVector) {
 	ImGui::SFML::Update();
 	saveValues();
 
@@ -85,6 +85,9 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 				myfile << i->identify() << "," << j->pos().x << "," << j->pos().y << "," << j->width() << "," << j->height() << "," <<
 					j->point1Offset().x << "," << j->point1Offset().y << "," << j->point2Offset().x << "," << j->point2Offset().y << "," <<
 					j->point3Offset().x << "," << j->point3Offset().y << "," << j->flags() << "\n";
+			}
+			if (i->identify() == 2) {
+				myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "\n";
 			}
 		}
 		delete newFilename;
@@ -128,6 +131,10 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 						point1Offset.x >> ch >> point1Offset.y >> ch >> point2Offset.x >> ch >> point2Offset.y >> ch >> point3Offset.x >> ch >> point3Offset.y >> ch >> flags;
 					gameObjectVector.push_back(new GamePolygonObject(pos, Vector2<float>(width, height), point1Offset, point2Offset, point3Offset, flags));
 				}
+				if (itemType == 2) {
+					myfile >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >> flags;
+					gameObjectVector.push_front(new Player(pos.x, pos.y, width, height));
+				}
 			}
 			delete newFilename;
 			myfile.close();
@@ -149,6 +156,7 @@ void Ui::update(vector<GameObject*> &gameObjectVector) {
 	ImGui::Checkbox("invertsGravity", &_invertsGravity);
 	ImGui::RadioButton("Rectangle", &_type, 0);
 	ImGui::RadioButton("Triangle", &_type, 1);
+	ImGui::RadioButton("Player", &_type, 2);
 	ImGui::End();
 
 	_flags = _fallsWhenTouched * Flag::fallsWhenTouched | _deadly * Flag::deadly | _outlineOnly * Flag::outlineOnly | _invertsGravity * Flag::invertsGravity;

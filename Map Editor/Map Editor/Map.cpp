@@ -53,6 +53,9 @@ void Map::update() {
 			_mouseObject = new GamePolygonObject(_controls->mouse().worldPos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
 				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags());
 		}
+		else if (_ui->type() == 2) {
+			_mouseObject = new Player(_controls->mouse().worldPos(), _ui->objectSize());
+		}
 	}
 	//Position mouseObject on mouse
 	if (_controls->lShift() == true) {
@@ -63,7 +66,7 @@ void Map::update() {
 	}
 	_mouseObject->update();
 
-	vector<GameObject*> mouseOnObjectVector = mouseOnObject();
+	deque<GameObject*> mouseOnObjectVector = mouseOnObject();
 	//Add new item on mouse click
 	if (_controls->mouse().left() == true && mouseOnObjectVector.size() == 0 && _ui->mouseOnWindow() == false && isInWorldrect(_mouseObject)) {
 		if (_ui->type() == 0) {
@@ -73,6 +76,9 @@ void Map::update() {
 			_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
 				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags()));
 		}
+		else if (_ui->type() == 2 && !objectTypeExists(2)) {
+			_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize()));
+		}
 	}
 
 	//Delete items on mouse click
@@ -81,6 +87,7 @@ void Map::update() {
 			for (const auto &j : mouseOnObjectVector) {
 				if (_gameObjectVector[i] == j) {
 					delete _gameObjectVector[i];
+					_gameObjectVector[i] = nullptr;
 					_gameObjectVector.erase(_gameObjectVector.begin() + i);
 				}
 			}
@@ -116,8 +123,8 @@ void Map::render() {
 	}
 	_window->draw(_worldRectshape);
 }
-vector<GameObject*> Map::mouseOnObject() {
-	vector<GameObject*> tempVector;
+deque<GameObject*> Map::mouseOnObject() {
+	deque<GameObject*> tempVector;
 	for (const auto &i : _gameObjectVector) {
 		if (i->contains(_controls->mouse().worldPos())) {
 			tempVector.push_back(i);
@@ -169,6 +176,14 @@ void Map::matchWorldYToObjects() {
 	}
 	*_worldSize.y = max;
 }
-vector<GameObject*>& Map::gameObjects() {
+deque<GameObject*>& Map::gameObjects() {
 	return _gameObjectVector;
+}
+bool Map::objectTypeExists(int type) {
+	for (auto &i : _gameObjectVector) {
+		if (i->identify() == type) {
+			return true;
+		}
+	}
+	return false;
 }

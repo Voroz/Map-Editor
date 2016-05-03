@@ -11,6 +11,6 @@ public:
 
 	bool contains(Vector2<float> point);
 	void syncShape();
-	int identify();
+	virtual int identify();
 };
 

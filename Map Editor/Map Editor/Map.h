@@ -2,9 +2,11 @@
 #include "GameObject.h"
 #include "GameRectObject.h"
 #include "GamePolygonObject.h"
+#include "Player.h"
 #include "Controls.h"
 #include "Ui.h"
 #include "MyView.h"
+#include <deque>
 #include <iostream>
 
 using namespace std;
@@ -17,17 +19,18 @@ public:
 	void update();
 	void render();
 	void sync();
-	vector<GameObject*> mouseOnObject();
+	deque<GameObject*> mouseOnObject();
 	int align(int value, int size);
 	bool isInWorldrect(GameObject* gameObj);
 	bool isInWorldXrect(GameObject* gameObj);
 	bool isInWorldYrect(GameObject* gameObj);
 	void matchWorldXToObjects();
 	void matchWorldYToObjects();
-	vector<GameObject*>& gameObjects();
+	deque<GameObject*>& gameObjects();
+	bool objectTypeExists(int type);
 
 private:
-	vector<GameObject*> _gameObjectVector;
+	deque<GameObject*> _gameObjectVector;
 	GameObject* _mouseObject;
 	sf::RenderWindow *_window;
 	Controls *_controls;

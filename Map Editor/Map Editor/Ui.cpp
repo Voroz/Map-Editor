@@ -12,7 +12,7 @@ Ui::Ui(sf::RenderWindow& window){
 	_worldSize[0] = 8000;
 	_worldSize[1] = 800;
 	_flags = 0;
-	_type = 0;
+	_type = 2;
 	_point1[0] = 0.5;
 	_point1[1] = 0;
 	_point2[0] = 1;
@@ -65,7 +65,7 @@ void Ui::update(deque<GameObject*> &gameObjectVector) {
 	ImGui::SetTooltip(_tooltip);
 	ImGui::EndTooltip();
 
-	ImGui::Begin("Filehandler");
+	ImGui::Begin("Filehandler", false, ImGuiWindowFlags_::ImGuiWindowFlags_AlwaysAutoResize);
 	if (ImGui::SmallButton("save")) {
 		ofstream myfile;
 		char* newFilename = new char[45];
@@ -142,13 +142,13 @@ void Ui::update(deque<GameObject*> &gameObjectVector) {
 	}
 	ImGui::InputText("File", _filename, 20);
 	ImGui::End();
-	
-	ImGui::Begin("GUI");
+
+	ImGui::Begin("GUI", false, ImGuiWindowFlags_::ImGuiWindowFlags_AlwaysAutoResize);
 	ImGui::InputInt2("worldSize", _worldSize);
 	ImGui::InputInt2("objectSize", _objectSize);
+	ImGui::RadioButton("Player", &_type, 2);
 	ImGui::RadioButton("Rectangle", &_type, 0);
 	ImGui::RadioButton("Triangle", &_type, 1);
-	ImGui::RadioButton("Player", &_type, 2);
 	if (_type == 0 || _type == 1) {
 		ImGui::Text("\n");
 		ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);

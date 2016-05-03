@@ -64,6 +64,9 @@ public:
 	////////////////////////////////////////////////////////////
 	void zoom(float factor);
 
+	float currentZoom();
+
 private:
 	const sf::FloatRect _worldRect;
+	float _currentZoom;
 };

@@ -2,8 +2,12 @@
 
 
 
-MyView::MyView(const sf::FloatRect& rectangle, const sf::FloatRect& worldRect) : _worldRect(worldRect), sf::View(rectangle){}
-MyView::MyView(const sf::Vector2f& center, const sf::Vector2f& size, const sf::FloatRect& worldRect) : _worldRect(worldRect), sf::View(center, size){}
+MyView::MyView(const sf::FloatRect& rectangle, const sf::FloatRect& worldRect) : _worldRect(worldRect), sf::View(rectangle){
+	_currentZoom = 1;
+}
+MyView::MyView(const sf::Vector2f& center, const sf::Vector2f& size, const sf::FloatRect& worldRect) : _worldRect(worldRect), sf::View(center, size){
+	_currentZoom = 1;
+}
 MyView::~MyView(){
 
 }
@@ -50,4 +54,8 @@ void MyView::setCenter(const sf::Vector2f& center) {
 }
 void MyView::zoom(float factor) {
 	sf::View::zoom(factor);
+	_currentZoom *= factor;
+}
+float MyView::currentZoom() {
+	return _currentZoom;
 }

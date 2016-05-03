@@ -35,7 +35,7 @@ void Map::update() {
 	//Move view on mouse scroll click
 	if (_controls->mouse().wheelClick() == true && _savedMousePos != _controls->mouse().pos()) {
 		Vector2<float> mouseDiff = _controls->mouse().pos() - _savedMousePos;
-		_view->move(-mouseDiff.x, -mouseDiff.y);
+		_view->move(-mouseDiff.x * _view->currentZoom(), -mouseDiff.y * _view->currentZoom());
 	}
 	_savedMousePos = _controls->mouse().pos();
 

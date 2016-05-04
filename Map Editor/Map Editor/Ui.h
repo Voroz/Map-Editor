@@ -54,6 +54,8 @@ private:
 	float _savedPoint3[2];
 	bool _opened;
 
+	bool _inputSavefile;
+	bool _inputLoadfile;
 	char _filename[20];
 };
 

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <deque>
 #include "Flag.h"
+#include "Map.h"
 #include "GameObject.h"
 #include "GameRectObject.h"
 #include "GamePolygonObject.h"
@@ -14,10 +15,12 @@
 
 using namespace std;
 
+class Map;
+
 class Ui
 {
 public:
-	Ui(sf::RenderWindow& window);
+	Ui(sf::RenderWindow& window, Map &map);
 	~Ui();
 	int& type();
 	int& flags();
@@ -27,12 +30,15 @@ public:
 	float* point2();
 	float* point3();
 	void setTooltip(string tooltip);
-	void update(deque<GameObject*> &gameObjectVector);
+	void update();
 	void render();
 	bool mouseOnWindow();
 	bool objectValueChanged();
+	void saveFile(string filepath);
+	void loadFile(string filepath);
 
 private:
+	Map *_map;
 	void saveValues();
 	bool _fallsWhenTouched;
 	bool _deadly;
@@ -57,5 +63,6 @@ private:
 	bool _inputSavefile;
 	bool _inputLoadfile;
 	char _filename[20];
+	vector<string> _recentFiles;
 };
 

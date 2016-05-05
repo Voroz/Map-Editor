@@ -11,11 +11,14 @@
 
 using namespace std;
 
+class Ui;
+
 class Map
 {
 public:
-	Map(sf::RenderWindow &window, Controls &controls, Ui &ui);
+	Map(sf::RenderWindow &window, Controls &controls);
 	~Map();
+	void setUi(Ui &ui);
 	void update();
 	void render();
 	void sync();

@@ -9,9 +9,10 @@ MapEditor::~MapEditor(){
 void MapEditor::run() {
 	sf::RenderWindow window(sf::VideoMode(1200, 800), "Map Editor");
 	window.setFramerateLimit(200);
-	Ui ui(window);
 	Controls controls(window);
-	Map map(window, controls, ui);
+	Map map(window, controls);
+	Ui ui(window, map);
+	map.setUi(ui);
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -62,7 +63,7 @@ void MapEditor::run() {
 			}
 		}
 
-		ui.update(map.gameObjects());
+		ui.update();
 		map.update();
 
 		window.clear();

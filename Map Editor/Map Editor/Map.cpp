@@ -2,25 +2,28 @@
 
 
 
-Map::Map(sf::RenderWindow &window, Controls &controls, Ui &ui){
+Map::Map(sf::RenderWindow &window, Controls &controls){
 	_window = &window;
 	_controls = &controls;
-	_ui = &ui;
 	_mouseObject = nullptr;
-	_worldSize.x = &_ui->worldSize()[0];
-	_worldSize.y = &_ui->worldSize()[1];
-	_worldRectshape.setSize(sf::Vector2f(*_worldSize.x, *_worldSize.y));
 	_worldRectshape.setPosition(0, 0);
 	_worldRectshape.setOutlineThickness(4);
 	_worldRectshape.setFillColor(sf::Color::Transparent);
 	_worldRectshape.setOutlineColor(sf::Color::Red);
-	_view = new MyView(sf::FloatRect(0, 0, 1200, 800), sf::FloatRect(0, 0, *_worldSize.x, *_worldSize.y));
 }
 Map::~Map(){
 	for (const auto &i : _gameObjectVector) {
 		delete i;
 	}
 	delete _mouseObject;
+}
+
+void Map::setUi(Ui &ui) {
+	_ui = &ui;
+	_worldSize.x = &_ui->worldSize()[0];
+	_worldSize.y = &_ui->worldSize()[1];
+	_worldRectshape.setSize(sf::Vector2f(*_worldSize.x, *_worldSize.y));
+	_view = new MyView(sf::FloatRect(0, 0, 1200, 800), sf::FloatRect(0, 0, *_worldSize.x, *_worldSize.y));
 }
 
 void Map::update() {

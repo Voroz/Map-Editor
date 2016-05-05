@@ -96,13 +96,13 @@ void Ui::update(deque<GameObject*> &gameObjectVector) {
 			myfile << _worldSize[0] << "," << _worldSize[1] << "\n";
 			for (auto &i : gameObjectVector) {
 				if (i->identify() == 0) {
-					myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "," << i->flags() << "\n";
+					myfile << i->identify() << "," << i->flags() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "\n";
 				}
 				else if (i->identify() == 1) {
 					GamePolygonObject *j = static_cast<GamePolygonObject*>(i);
-					myfile << i->identify() << "," << j->pos().x << "," << j->pos().y << "," << j->width() << "," << j->height() << "," <<
+					myfile << i->identify() << "," << j->flags() << "," << j->pos().x << "," << j->pos().y << "," << j->width() << "," << j->height() << "," <<
 						j->point1Offset().x << "," << j->point1Offset().y << "," << j->point2Offset().x << "," << j->point2Offset().y << "," <<
-						j->point3Offset().x << "," << j->point3Offset().y << "," << j->flags() << "\n";
+						j->point3Offset().x << "," << j->point3Offset().y << "\n";
 				}
 				if (i->identify() == 2) {
 					myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "\n";
@@ -147,12 +147,12 @@ void Ui::update(deque<GameObject*> &gameObjectVector) {
 				while (!myfile.eof()) {
 					myfile >> itemType >> ch;
 					if (itemType == 0) {
-						myfile >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >> flags;
+						myfile >> flags >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height;
 						gameObjectVector.push_back(new GameRectObject(pos.x, pos.y, width, height, flags));
 					}
 					else if (itemType == 1) {
-						myfile >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >>
-							point1Offset.x >> ch >> point1Offset.y >> ch >> point2Offset.x >> ch >> point2Offset.y >> ch >> point3Offset.x >> ch >> point3Offset.y >> ch >> flags;
+						myfile >> flags >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >>
+							point1Offset.x >> ch >> point1Offset.y >> ch >> point2Offset.x >> ch >> point2Offset.y >> ch >> point3Offset.x >> ch >> point3Offset.y;
 						gameObjectVector.push_back(new GamePolygonObject(pos, Vector2<float>(width, height), point1Offset, point2Offset, point3Offset, flags));
 					}
 					if (itemType == 2) {

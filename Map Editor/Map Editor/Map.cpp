@@ -34,15 +34,15 @@ void Map::update() {
 	}
 	//New mouse object if we have none
 	if (_mouseObject == nullptr) {
-		if (_ui->type() == 0) {
-			_mouseObject = new GameRectObject(_controls->mouse().worldPos(), _ui->objectSize(), _ui->flags());
+		if (_ui->objectType() == 0) {
+			_mouseObject = new GameRectObject(_ui->physicsType(), _controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->flags());
 		}
-		else if (_ui->type() == 1) {
-			_mouseObject = new GamePolygonObject(_controls->mouse().worldPos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+		else if (_ui->objectType() == 1) {
+			_mouseObject = new GamePolygonObject(_ui->physicsType(), _controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
 				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags());
 		}
-		else if (_ui->type() == 2) {
-			_mouseObject = new Player(_controls->mouse().worldPos(), _ui->objectSize());
+		else if (_ui->objectType() == 2) {
+			_mouseObject = new Player(_controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness());
 		}
 	}
 	//Position mouseObject on mouse
@@ -71,15 +71,15 @@ void Map::update() {
 		deque<GameObject*> mouseOnObjectVector = mouseOnObject();
 		//Add new item on mouse click
 		if (_controls->mouse().left() == true && mouseOnObjectVector.size() == 0 && isInWorldrect(_mouseObject)) {
-			if (_ui->type() == 0) {
-				_gameObjectVector.push_back(new GameRectObject(_mouseObject->pos(), _ui->objectSize(), _ui->flags()));
+			if (_ui->objectType() == 0) {
+				_gameObjectVector.push_back(new GameRectObject(_ui->physicsType(), _mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->flags()));
 			}
-			else if (_ui->type() == 1) {
-				_gameObjectVector.push_back(new GamePolygonObject(_mouseObject->pos(), _ui->objectSize(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+			else if (_ui->objectType() == 1) {
+				_gameObjectVector.push_back(new GamePolygonObject(_ui->physicsType(), _mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
 					Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags()));
 			}
-			else if (_ui->type() == 2 && !objectTypeExists(2)) {
-				_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize()));
+			else if (_ui->objectType() == 2 && !objectTypeExists(2)) {
+				_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness()));
 			}
 		}
 

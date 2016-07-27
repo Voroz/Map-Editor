@@ -13,7 +13,7 @@ Ui::Ui(sf::RenderWindow& window, Map &map){
 	_worldSize[0] = 8000;
 	_worldSize[1] = 800;
 	_flags = 0;
-	_type = 2;
+	_objectType = 2;
 	_point1[0] = 0.5;
 	_point1[1] = 0;
 	_point2[0] = 1;
@@ -30,8 +30,20 @@ Ui::~Ui(){
 	ImGui::SFML::Shutdown();
 }
 
-int& Ui::type() {
-	return _type;
+int& Ui::objectType() {
+	return _objectType;
+}
+
+int& Ui::physicsType() {
+	return _physicsType;
+}
+
+float& Ui::mass() {
+	return _mass;
+}
+
+float& Ui::bouncyness() {
+	return _bouncyness;
 }
 
 int& Ui::flags() {
@@ -116,20 +128,36 @@ void Ui::update() {
 	}
 
 	ImGui::Begin("GUI", false, ImGuiWindowFlags_::ImGuiWindowFlags_AlwaysAutoResize);
-	ImGui::InputInt2("worldSize", _worldSize);
-	ImGui::InputInt2("objectSize", _objectSize);
-	ImGui::RadioButton("Player", &_type, 2);
-	ImGui::RadioButton("Rectangle", &_type, 0);
-	ImGui::RadioButton("Triangle", &_type, 1);
-	if (_type == 0 || _type == 1) {
+	ImGui::Text("World:");
+	ImGui::InputInt2("World Size", _worldSize);
+	ImGui::Text("\n");
+	ImGui::Text("Object:");
+	ImGui::InputInt2("Object Size", _objectSize);
+	ImGui::InputFloat("Mass", &_mass, 1, 5);
+	ImGui::InputFloat("Bouncyness", &_bouncyness, 1, 5);
+
+	ImGui::Text("\n");
+	ImGui::Text("Object Type:");
+	ImGui::RadioButton("Player", &_objectType, 2); ImGui::SameLine();
+	ImGui::RadioButton("Rectangle", &_objectType, 0); ImGui::SameLine();
+	ImGui::RadioButton("Triangle", &_objectType, 1);
+
+	ImGui::Text("\n");
+	ImGui::Text("Physics Type:");
+	ImGui::RadioButton("Static", &_physicsType, 0); ImGui::SameLine();
+	ImGui::RadioButton("Dynamic", &_physicsType, 1);
+
+	if (_objectType == 0 || _objectType == 1) {
 		ImGui::Text("\n");
+		ImGui::Text("Flags:");
 		ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);
 		ImGui::Checkbox("deadly", &_deadly);
 		ImGui::Checkbox("outlineOnly", &_outlineOnly);
 		ImGui::Checkbox("invertsGravity", &_invertsGravity);
 	}
-	if (_type == 1) {
-		ImGui::Text("\nTriangle point offsets:");
+	if (_objectType == 1) {
+		ImGui::Text("\n");
+		ImGui::Text("Triangle point offsets:");
 		ImGui::SliderFloat2("Point 1", _point1, 0, 1);
 		ImGui::SliderFloat2("Point 2", _point2, 0, 1);
 		ImGui::SliderFloat2("Point 3", _point3, 0, 1);
@@ -145,9 +173,12 @@ bool Ui::mouseOnWindow() {
 	return ImGui::IsMouseHoveringAnyWindow();
 }
 void Ui::saveValues() {
+	_savedMass = _mass;
+	_savedBouncyness = _bouncyness;
 	_savedFlags = flags();
 	_savedObjectSize = objectSize();
-	_savedType = type();
+	_savedObjectType = objectType();
+	_savedPhysicsType = _physicsType;
 	_savedPoint1[0] = _point1[0];
 	_savedPoint1[1] = _point1[1];
 	_savedPoint2[0] = _point2[0];
@@ -156,7 +187,8 @@ void Ui::saveValues() {
 	_savedPoint3[1] = _point3[1];
 }
 bool Ui::objectValueChanged() {
-	return (_flags != _savedFlags || Vector2<float>(_objectSize[0], _objectSize[1]) != _savedObjectSize || _type != _savedType ||
+	return (_flags != _savedFlags || Vector2<float>(_objectSize[0], _objectSize[1]) != _savedObjectSize ||
+		_objectType != _savedObjectType || _physicsType != _savedPhysicsType || _mass != _savedMass || _bouncyness != _savedBouncyness ||
 		_savedPoint1[0] != _point1[0] || _savedPoint1[1] != _point1[1] || _savedPoint2[0] != _point2[0] ||
 		_savedPoint2[1] != _point2[1] || _savedPoint3[0] != _point3[0] || _savedPoint3[1] != _point3[1]);
 }
@@ -165,17 +197,17 @@ void Ui::saveFile(string filepath) {
 	myfile.open(filepath);
 	myfile << _worldSize[0] << "," << _worldSize[1] << "\n";
 	for (auto &i : _map->gameObjects()) {
+		myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "," << i->mass() << "," << i->bouncyness() << ",";
 		if (i->identify() == 0) {
-			myfile << i->identify() << "," << i->flags() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "\n";
+			myfile << i->physicsType() << "," << i->flags() << "\n";
 		}
 		else if (i->identify() == 1) {
 			GamePolygonObject *j = static_cast<GamePolygonObject*>(i);
-			myfile << i->identify() << "," << j->flags() << "," << j->pos().x << "," << j->pos().y << "," << j->width() << "," << j->height() << "," <<
-				j->point1Offset().x << "," << j->point1Offset().y << "," << j->point2Offset().x << "," << j->point2Offset().y << "," <<
+			myfile << i->physicsType() << "," << j->flags() << "," << j->point1Offset().x << "," << j->point1Offset().y << "," << j->point2Offset().x << "," << j->point2Offset().y << "," <<
 				j->point3Offset().x << "," << j->point3Offset().y << "\n";
 		}
 		if (i->identify() == 2) {
-			myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << "\n";
+			myfile << "\n";
 		}
 	}
 	//Check if recent filename already exists
@@ -209,22 +241,24 @@ void Ui::loadFile(string filepath) {
 		Vector2<float> point2Offset;
 		Vector2<float> point3Offset;
 		int flags;
+		int physicsType;
+		float mass;
+		float bouncyness;
 
 		myfile >> _worldSize[0] >> ch >> _worldSize[1];
 		while (!myfile.eof()) {
-			myfile >> itemType >> ch;
+			myfile >> itemType >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >> mass >> ch >> bouncyness >> ch;
 			if (itemType == 0) {
-				myfile >> flags >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height;
-				_map->gameObjects().push_back(new GameRectObject(pos.x, pos.y, width, height, flags));
+				myfile >> physicsType >> ch >> flags;
+				_map->gameObjects().push_back(new GameRectObject(physicsType, pos.x, pos.y, width, height, mass, bouncyness, flags));
 			}
 			else if (itemType == 1) {
-				myfile >> flags >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >>
+				myfile >> physicsType >> ch >> flags >> ch >>
 					point1Offset.x >> ch >> point1Offset.y >> ch >> point2Offset.x >> ch >> point2Offset.y >> ch >> point3Offset.x >> ch >> point3Offset.y;
-				_map->gameObjects().push_back(new GamePolygonObject(pos, Vector2<float>(width, height), point1Offset, point2Offset, point3Offset, flags));
+				_map->gameObjects().push_back(new GamePolygonObject(physicsType, pos, Vector2<float>(width, height), mass, bouncyness, point1Offset, point2Offset, point3Offset, flags));
 			}
 			if (itemType == 2) {
-				myfile >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height;
-				_map->gameObjects().push_front(new Player(pos.x, pos.y, width, height));
+				_map->gameObjects().push_front(new Player(pos.x, pos.y, width, height, mass, bouncyness));
 			}
 		}
 		//Check if recent filename already exists

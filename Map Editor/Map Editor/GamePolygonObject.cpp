@@ -1,6 +1,6 @@
 #include "GamePolygonObject.h"
 
-GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, Vector2<float> size, Vector2<float> point1Offset, Vector2<float> point2Offset, Vector2<float> point3Offset, const int flags) : GameObject(topLeftPos, size, flags){
+GamePolygonObject::GamePolygonObject(const int physicsType, Vector2<float> topLeftPos, Vector2<float> size, const float mass, const float bouncyness, Vector2<float> point1Offset, Vector2<float> point2Offset, Vector2<float> point3Offset, const int flags) : GameObject(physicsType, topLeftPos, size, mass, bouncyness, flags){
 	_point1Offset = point1Offset;
 	_point2Offset = point2Offset;
 	_point3Offset = point3Offset;
@@ -13,7 +13,7 @@ GamePolygonObject::GamePolygonObject(Vector2<float> topLeftPos, Vector2<float> s
 		float minSize = std::min(_width, _height);
 		_shape->setOutlineThickness(-minSize*0.1);
 		_shape->setOutlineColor(sf::Color(255, 255, 255));
-		_shape->setFillColor(sf::Color(0, 0, 0));
+		_shape->setFillColor(sf::Color(0, 0, 0, 0));
 	}
 
 	syncShape();

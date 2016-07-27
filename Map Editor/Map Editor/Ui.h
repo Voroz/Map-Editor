@@ -22,7 +22,10 @@ class Ui
 public:
 	Ui(sf::RenderWindow& window, Map &map);
 	~Ui();
-	int& type();
+	int& objectType();
+	int& physicsType();
+	float& mass();
+	float& bouncyness();
 	int& flags();
 	Vector2<float>& objectSize();
 	int* worldSize();
@@ -40,6 +43,8 @@ public:
 private:
 	Map *_map;
 	void saveValues();
+	float _mass;
+	float _bouncyness;
 	bool _fallsWhenTouched;
 	bool _deadly;
 	bool _outlineOnly;
@@ -48,13 +53,17 @@ private:
 	float _point1[2];
 	float _point2[2];
 	float _point3[2];
-	int _type;
+	int _objectType;
+	int _physicsType;
 	int _flags;
 	int _worldSize[2];
 	char _tooltip[40];
+	float _savedMass;
+	float _savedBouncyness;
 	int _savedFlags;
 	Vector2<float> _savedObjectSize;
-	int _savedType;
+	int _savedObjectType;
+	int _savedPhysicsType;
 	float _savedPoint1[2];
 	float _savedPoint2[2];
 	float _savedPoint3[2];

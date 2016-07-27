@@ -1,23 +1,23 @@
 #include "GameRectObject.h"
 
-GameRectObject::GameRectObject(Vector2<float> pos, Vector2<float> size, const int flags) : GameObject(pos, size, flags) {
+GameRectObject::GameRectObject(const int physicsType, Vector2<float> pos, Vector2<float> size, const float mass, const float bouncyness, const int flags) : GameObject(physicsType, pos, size, mass, bouncyness, flags) {
 	_shape = new sf::RectangleShape;
 
 	if (_flags & Flag::outlineOnly) {
 		float minSize = std::min(_width, _height);
 		_shape->setOutlineThickness(-minSize*0.1);
 		_shape->setOutlineColor(sf::Color(255, 255, 255));
-		_shape->setFillColor(sf::Color(0, 0, 0));
+		_shape->setFillColor(sf::Color(0, 0, 0, 0));
 	}
 };
-GameRectObject::GameRectObject(float x, float y, float width, float height, const int flags) : GameObject(x, y, width, height, flags) {
+GameRectObject::GameRectObject(const int physicsType, float x, float y, float width, float height, const float mass, const float bouncyness, const int flags) : GameObject(physicsType, x, y, width, height, mass, bouncyness, flags) {
 	_shape = new sf::RectangleShape;
 
 	if (_flags & Flag::outlineOnly) {
 		float minSize = std::min(_width, _height);
 		_shape->setOutlineThickness(-minSize*0.1);
 		_shape->setOutlineColor(sf::Color(255, 255, 255));
-		_shape->setFillColor(sf::Color(0, 0, 0));
+		_shape->setFillColor(sf::Color(0, 0, 0, 0));
 	}
 };
 

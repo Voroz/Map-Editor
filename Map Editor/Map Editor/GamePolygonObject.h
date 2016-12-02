@@ -8,7 +8,7 @@ class GamePolygonObject :
 	public GameObject
 {
 public:
-	GamePolygonObject(const int physicsType, Vector2<float> topLeftPos = Vector2<float>(0, 0), Vector2<float> size = Vector2<float>(0, 0), const float mass = 1, const float bouncyness = 0, Vector2<float> point1Offset = Vector2<float>(0, 0), Vector2<float> point2Offset = Vector2<float>(0, 0), Vector2<float> point3Offset = Vector2<float>(0, 0), const int flags = Flag::noFlag);
+	GamePolygonObject(const int physicsType, Vector2<float> topLeftPos = Vector2<float>(0, 0), Vector2<float> size = Vector2<float>(0, 0), const float mass = 1, const float bouncyness = 0, Vector2<float> gravityMultiplier = Vector2<float>(1, 1), Vector2<float> point1Offset = Vector2<float>(0, 0), Vector2<float> point2Offset = Vector2<float>(0, 0), Vector2<float> point3Offset = Vector2<float>(0, 0), const int flags = Flag::noFlag);
 	virtual ~GamePolygonObject();
 
 	bool contains(Vector2<float> point);

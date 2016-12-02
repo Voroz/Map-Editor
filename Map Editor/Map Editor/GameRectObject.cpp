@@ -1,6 +1,6 @@
 #include "GameRectObject.h"
 
-GameRectObject::GameRectObject(const int physicsType, Vector2<float> pos, Vector2<float> size, const float mass, const float bouncyness, const int flags) : GameObject(physicsType, pos, size, mass, bouncyness, flags) {
+GameRectObject::GameRectObject(const int physicsType, Vector2<float> pos, Vector2<float> size, const float mass, const float bouncyness, Vector2<float> gravityMultiplier, const int flags) : GameObject(physicsType, pos, size, mass, bouncyness, gravityMultiplier, flags) {
 	_shape = new sf::RectangleShape;
 
 	if (_flags & Flag::outlineOnly) {
@@ -10,7 +10,7 @@ GameRectObject::GameRectObject(const int physicsType, Vector2<float> pos, Vector
 		_shape->setFillColor(sf::Color(0, 0, 0, 0));
 	}
 };
-GameRectObject::GameRectObject(const int physicsType, float x, float y, float width, float height, const float mass, const float bouncyness, const int flags) : GameObject(physicsType, x, y, width, height, mass, bouncyness, flags) {
+GameRectObject::GameRectObject(const int physicsType, float x, float y, float width, float height, const float mass, const float bouncyness, Vector2<float> gravityMultiplier, const int flags) : GameObject(physicsType, x, y, width, height, mass, bouncyness, gravityMultiplier, flags) {
 	_shape = new sf::RectangleShape;
 
 	if (_flags & Flag::outlineOnly) {

@@ -31,6 +31,8 @@ public:
 	void matchWorldYToObjects();
 	deque<GameObject*>& gameObjects();
 	bool objectTypeExists(int type);
+	void saveFile(string filepath);
+	void loadFile(string filepath);
 
 private:
 	deque<GameObject*> _gameObjectVector;

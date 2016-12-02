@@ -8,8 +8,8 @@ class GameObject :
 {
 public:
 	friend class Game;
-	GameObject(const int physicsType, Vector2<float> pos = Vector2<float>(0, 0), Vector2<float> size = Vector2<float>(0, 0), const float mass = 1, const float bouncyness = 0, const int flags = Flag::noFlag);
-	GameObject(const int physicsType, float x, float y, float width = 0, float height = 0, const float mass = 1, const float bouncyness = 0, const int flags = Flag::noFlag);
+	GameObject(const int physicsType, Vector2<float> pos = Vector2<float>(0, 0), Vector2<float> size = Vector2<float>(0, 0), const float mass = 1, const float bouncyness = 0, Vector2<float> gravityMultiplier = Vector2<float>(0, 0), const int flags = Flag::noFlag);
+	GameObject(const int physicsType, float x, float y, float width = 0, float height = 0, const float mass = 1, const float bouncyness = 0, Vector2<float> gravityMultiplier = Vector2<float>(0, 0), const int flags = Flag::noFlag);
 	~GameObject();
 
 	virtual bool contains(Vector2<float> point) = 0;
@@ -17,6 +17,7 @@ public:
 	float bouncyness() const;
 	int flags();
 	int physicsType();
+	Vector2<float> gravityMultiplier();
 	sf::Shape* shape();
 	virtual void update();
 	virtual int identify() = 0;
@@ -28,6 +29,7 @@ protected:
 	//Attributes
 	float _mass;
 	float _bouncyness;
+	Vector2<float> _gravityMultiplier;
 	int _physicsType;
 	int _flags;
 	sf::Shape *_shape;

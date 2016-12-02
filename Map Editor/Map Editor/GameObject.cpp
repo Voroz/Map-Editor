@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(const int physicsType, Vector2<float> pos, Vector2<float> size, const float mass, const float bouncyness, const int flags){
+GameObject::GameObject(const int physicsType, Vector2<float> pos, Vector2<float> size, const float mass, const float bouncyness, Vector2<float> gravityMultiplier, const int flags){
 	_physicsType = physicsType;
 	_flags = flags;
 	_position = pos;
@@ -10,8 +10,9 @@ GameObject::GameObject(const int physicsType, Vector2<float> pos, Vector2<float>
 	_center.y = _height / 2;
 	_mass = mass;
 	_bouncyness = bouncyness;
+	_gravityMultiplier = gravityMultiplier;
 }
-GameObject::GameObject(const int physicsType, float x, float y, float width, float height, const float mass, const float bouncyness, const int flags){
+GameObject::GameObject(const int physicsType, float x, float y, float width, float height, const float mass, const float bouncyness, Vector2<float> gravityMultiplier, const int flags){
 	_physicsType = physicsType;
 	_flags = flags;
 	_position = Vector2<float>(x, y);
@@ -21,6 +22,7 @@ GameObject::GameObject(const int physicsType, float x, float y, float width, flo
 	_center.y = _height / 2;
 	_mass = mass;
 	_bouncyness = bouncyness;
+	_gravityMultiplier = gravityMultiplier;
 }
 GameObject::~GameObject() {
 	delete _shape;
@@ -37,10 +39,12 @@ float GameObject::bouncyness() const {
 int GameObject::physicsType() {
 	return _physicsType;
 }
+Vector2<float> GameObject::gravityMultiplier() {
+	return _gravityMultiplier;
+}
 sf::Shape* GameObject::shape() {
 	return _shape;
 }
 void GameObject::update() {
-
 	syncShape();
 }

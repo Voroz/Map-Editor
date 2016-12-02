@@ -1,6 +1,6 @@
 #include "GamePolygonObject.h"
 
-GamePolygonObject::GamePolygonObject(const int physicsType, Vector2<float> topLeftPos, Vector2<float> size, const float mass, const float bouncyness, Vector2<float> point1Offset, Vector2<float> point2Offset, Vector2<float> point3Offset, const int flags) : GameObject(physicsType, topLeftPos, size, mass, bouncyness, flags){
+GamePolygonObject::GamePolygonObject(const int physicsType, Vector2<float> topLeftPos, Vector2<float> size, const float mass, const float bouncyness, Vector2<float> gravityMultiplier, Vector2<float> point1Offset, Vector2<float> point2Offset, Vector2<float> point3Offset, const int flags) : GameObject(physicsType, topLeftPos, size, mass, bouncyness, gravityMultiplier, flags){
 	_point1Offset = point1Offset;
 	_point2Offset = point2Offset;
 	_point3Offset = point3Offset;

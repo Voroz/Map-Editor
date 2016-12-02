@@ -27,7 +27,8 @@ public:
 	float& mass();
 	float& bouncyness();
 	int& flags();
-	Vector2<float>& objectSize();
+	Vector2<float> objectSize();
+	Vector2<float> gravityMultiplier();
 	int* worldSize();
 	float* point1();
 	float* point2();
@@ -37,8 +38,6 @@ public:
 	void render();
 	bool mouseOnWindow();
 	bool objectValueChanged();
-	void saveFile(string filepath);
-	void loadFile(string filepath);
 
 private:
 	Map *_map;
@@ -58,6 +57,7 @@ private:
 	int _flags;
 	int _worldSize[2];
 	char _tooltip[40];
+	float _gravityMultiplier[2];
 	float _savedMass;
 	float _savedBouncyness;
 	int _savedFlags;
@@ -67,7 +67,7 @@ private:
 	float _savedPoint1[2];
 	float _savedPoint2[2];
 	float _savedPoint3[2];
-	bool _opened;
+	float _savedGravityMultiplier[2];
 
 	bool _inputSavefile;
 	bool _inputLoadfile;

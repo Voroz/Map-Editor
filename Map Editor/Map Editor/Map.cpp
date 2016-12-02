@@ -26,6 +26,96 @@ void Map::setUi(Ui &ui) {
 	_view = new MyView(sf::FloatRect(0, 0, 1200, 800), sf::FloatRect(0, 0, *_worldSize.x, *_worldSize.y));
 }
 
+void Map::saveFile(string filepath) {
+	ofstream myfile;
+	myfile.open(filepath);
+	myfile << _ui->worldSize()[0] << "," << _ui->worldSize()[1] << "\n";
+	for (auto &i : _gameObjectVector) {
+		myfile << i->identify() << "," << i->pos().x << "," << i->pos().y << "," << i->width() << "," << i->height() << ","
+			<< i->mass() << "," << i->bouncyness() << "," << i->gravityMultiplier().x << "," << i->gravityMultiplier().y << ",";
+		if (i->identify() == 0) {
+			myfile << i->physicsType() << "," << i->flags() << "\n";
+		}
+		else if (i->identify() == 1) {
+			GamePolygonObject *j = static_cast<GamePolygonObject*>(i);
+			myfile << i->physicsType() << "," << j->flags() << "," << j->point1Offset().x << "," << j->point1Offset().y << ","
+				<< j->point2Offset().x << "," << j->point2Offset().y << "," << j->point3Offset().x << "," << j->point3Offset().y << "\n";
+		}
+		if (i->identify() == 2) {
+			myfile << "\n";
+		}
+	}
+	/*//Check if recent filename already exists
+	bool exists = false;
+	for (auto &i : _recentFiles) {
+		if (i == filepath) {
+			exists = true;
+		}
+	}
+	if (exists == false) {
+		_recentFiles.push_back(filepath);
+	}*/
+	myfile.close();
+}
+
+void Map::loadFile(string filepath) {
+	ifstream myfile;
+	myfile.open(filepath);
+	if (myfile.is_open()) {
+		for (auto &i : _gameObjectVector) {
+			delete i;
+		}
+		_gameObjectVector.clear();
+
+
+		char ch;
+		int itemType;
+		Vector2<float> pos;
+		float width;
+		float height;
+		Vector2<float> point1Offset;
+		Vector2<float> point2Offset;
+		Vector2<float> point3Offset;
+		int flags;
+		int physicsType;
+		float mass;
+		float bouncyness;
+		Vector2<float> gravityMultiplier;
+
+		myfile >> _ui->worldSize()[0] >> ch >> _ui->worldSize()[1];
+		while (!myfile.eof()) {
+			myfile >> itemType >> ch >> pos.x >> ch >> pos.y >> ch >> width >> ch >> height >> ch >> mass >> ch >> bouncyness >> ch
+				>> gravityMultiplier.x >> ch >> gravityMultiplier.y >> ch;
+
+			if (itemType == 0) {
+				myfile >> physicsType >> ch >> flags;
+				_gameObjectVector.push_back(new GameRectObject(physicsType, pos.x, pos.y, width, height, mass, bouncyness, gravityMultiplier, flags));
+			}
+
+			else if (itemType == 1) {
+				myfile >> physicsType >> ch >> flags >> ch >>
+					point1Offset.x >> ch >> point1Offset.y >> ch >> point2Offset.x >> ch >> point2Offset.y >> ch >> point3Offset.x >> ch >> point3Offset.y;
+				_gameObjectVector.push_back(new GamePolygonObject(physicsType, pos, Vector2<float>(width, height), mass, bouncyness, gravityMultiplier, point1Offset, point2Offset, point3Offset, flags));
+			}
+
+			if (itemType == 2) {
+				_gameObjectVector.push_front(new Player(pos.x, pos.y, width, height, mass, bouncyness, gravityMultiplier));
+			}
+		}
+		/*//Check if recent filename already exists
+		bool exists = false;
+		for (auto &i : _recentFiles) {
+			if (i == filepath) {
+				exists = true;
+			}
+		}
+		if (exists == false) {
+			_recentFiles.push_back(filepath);
+		}*/
+		myfile.close();
+	}
+}
+
 void Map::update() {
 	//Delete mouse item if value changed
 	if (_ui->objectValueChanged()) {
@@ -35,14 +125,14 @@ void Map::update() {
 	//New mouse object if we have none
 	if (_mouseObject == nullptr) {
 		if (_ui->objectType() == 0) {
-			_mouseObject = new GameRectObject(_ui->physicsType(), _controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->flags());
+			_mouseObject = new GameRectObject(_ui->physicsType(), _controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->gravityMultiplier(), _ui->flags());
 		}
 		else if (_ui->objectType() == 1) {
-			_mouseObject = new GamePolygonObject(_ui->physicsType(), _controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+			_mouseObject = new GamePolygonObject(_ui->physicsType(), _controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->gravityMultiplier(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
 				Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags());
 		}
 		else if (_ui->objectType() == 2) {
-			_mouseObject = new Player(_controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness());
+			_mouseObject = new Player(_controls->mouse().worldPos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->gravityMultiplier());
 		}
 	}
 	//Position mouseObject on mouse
@@ -72,14 +162,14 @@ void Map::update() {
 		//Add new item on mouse click
 		if (_controls->mouse().left() == true && mouseOnObjectVector.size() == 0 && isInWorldrect(_mouseObject)) {
 			if (_ui->objectType() == 0) {
-				_gameObjectVector.push_back(new GameRectObject(_ui->physicsType(), _mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->flags()));
+				_gameObjectVector.push_back(new GameRectObject(_ui->physicsType(), _mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->gravityMultiplier(), _ui->flags()));
 			}
 			else if (_ui->objectType() == 1) {
-				_gameObjectVector.push_back(new GamePolygonObject(_ui->physicsType(), _mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
+				_gameObjectVector.push_back(new GamePolygonObject(_ui->physicsType(), _mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->gravityMultiplier(), Vector2<float>(_ui->point1()[0], _ui->point1()[1]),
 					Vector2<float>(_ui->point2()[0], _ui->point2()[1]), Vector2<float>(_ui->point3()[0], _ui->point3()[1]), _ui->flags()));
 			}
 			else if (_ui->objectType() == 2 && !objectTypeExists(2)) {
-				_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness()));
+				_gameObjectVector.push_front(new Player(_mouseObject->pos(), _ui->objectSize(), _ui->mass(), _ui->bouncyness(), _ui->gravityMultiplier()));
 			}
 		}
 

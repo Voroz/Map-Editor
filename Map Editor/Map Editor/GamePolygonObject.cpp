@@ -8,13 +8,6 @@ GamePolygonObject::GamePolygonObject(const int physicsType, Vector2<float> topLe
 	_vertices.push_back(Vector2<float>(_width * _point2Offset.x, _height * _point2Offset.y));
 	_vertices.push_back(Vector2<float>(_width * _point3Offset.x, _height * _point3Offset.y));
 	_shape = new sf::ConvexShape(_vertices.size());
-	
-	if (_flags & Flag::outlineOnly) {
-		float minSize = std::min(_width, _height);
-		_shape->setOutlineThickness(-minSize*0.1);
-		_shape->setOutlineColor(sf::Color(255, 255, 255));
-		_shape->setFillColor(sf::Color(0, 0, 0, 0));
-	}
 
 	syncShape();
 };
@@ -115,10 +108,6 @@ void GamePolygonObject::update() {
 }
 
 void GamePolygonObject::syncShape() {
-	sf::ConvexShape *convexShape = static_cast<sf::ConvexShape*>(_shape);
-	for (int i = 0; i < _vertices.size(); i++) {
-		convexShape->setPoint(i, sf::Vector2f(_vertices[i].x, _vertices[i].y));
-	}
 	_shape->setPosition(_position.x, _position.y);
 	_shape->setOrigin(_center.x, _center.y);
 }
@@ -129,6 +118,21 @@ vector<Vector2<float>> GamePolygonObject::vertices() {
 		adjustedVertices.push_back(i - _center);
 	}
 	return adjustedVertices;
+}
+
+void GamePolygonObject::setVertices(Vector2<float> v1, Vector2<float> v2, Vector2<float> v3) {
+	assert(v1.x >= 0 && v1.x <= 1 && v1.y >= 0 && v1.y <= 1
+		&& v2.x >= 0 && v2.x <= 1 && v2.y >= 0 && v2.y <= 1
+		&& v3.x >= 0 && v3.x <= 1 && v3.y >= 0 && v3.y <= 1);
+
+	_vertices[0] = Vector2<float>(_width * v1.x, _height * v1.y);
+	_vertices[1] = Vector2<float>(_width * v2.x, _height * v2.y);
+	_vertices[2] = Vector2<float>(_width * v3.x, _height * v3.y);
+
+	sf::ConvexShape *convexShape = static_cast<sf::ConvexShape*>(_shape);
+	for (int i = 0; i < _vertices.size(); i++) {
+		convexShape->setPoint(i, sf::Vector2f(_vertices[i].x, _vertices[i].y));
+	}
 }
 
 int GamePolygonObject::identify() {

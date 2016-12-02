@@ -21,6 +21,10 @@ public:
 	sf::Shape* shape();
 	virtual void update();
 	virtual int identify() = 0;
+	void setMass(float mass);
+	void setBouncyness(float bouncyness);
+	void setGravityMultiplier(Vector2<float> gravityMultiplier);
+	void setFlags(int flags);
 
 protected:
 	//Functions

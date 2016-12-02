@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include <numeric>
+#include <assert.h>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ public:
 	void syncShape();
 	void update();
 	vector<Vector2<float>> vertices();
+	void setVertices(Vector2<float> v1, Vector2<float> v2, Vector2<float> v3);
 	int identify();
 
 protected:

@@ -48,3 +48,22 @@ sf::Shape* GameObject::shape() {
 void GameObject::update() {
 	syncShape();
 }
+void GameObject::setMass(float mass) {
+	_mass = mass;
+}
+void GameObject::setBouncyness(float bouncyness) {
+	_bouncyness = bouncyness;
+}
+void GameObject::setGravityMultiplier(Vector2<float> gravityMultiplier) {
+	_gravityMultiplier = gravityMultiplier;
+}
+void GameObject::setFlags(int flags) {
+	_flags = flags;
+
+	if (_flags & Flag::outlineOnly) {
+		float minSize = std::min(_width, _height);
+		_shape->setOutlineThickness(-minSize*0.1);
+		_shape->setOutlineColor(sf::Color(255, 255, 255));
+		_shape->setFillColor(sf::Color(0, 0, 0, 0));
+	}
+}

@@ -204,5 +204,6 @@ bool Ui::objectValueChanged() {
 		_objectType != _savedObjectType || _physicsType != _savedPhysicsType || _mass != _savedMass || _bouncyness != _savedBouncyness ||
 		_savedPoint1[0] != _point1[0] || _savedPoint1[1] != _point1[1] || _savedPoint2[0] != _point2[0] ||
 		_savedPoint2[1] != _point2[1] || _savedPoint3[0] != _point3[0] || _savedPoint3[1] != _point3[1] ||
-		_gravityMultiplier != _savedGravityMultiplier);
+		_gravityMultiplier[0] != _savedGravityMultiplier[0] ||
+		_gravityMultiplier[1] != _savedGravityMultiplier[1]);
 }

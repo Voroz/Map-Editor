@@ -13,12 +13,6 @@ GameRectObject::GameRectObject(const int physicsType, Vector2<float> pos, Vector
 GameRectObject::GameRectObject(const int physicsType, float x, float y, float width, float height, const float mass, const float bouncyness, Vector2<float> gravityMultiplier, const int flags) : GameObject(physicsType, x, y, width, height, mass, bouncyness, gravityMultiplier, flags) {
 	_shape = new sf::RectangleShape;
 
-	if (_flags & Flag::outlineOnly) {
-		float minSize = std::min(_width, _height);
-		_shape->setOutlineThickness(-minSize*0.1);
-		_shape->setOutlineColor(sf::Color(255, 255, 255));
-		_shape->setFillColor(sf::Color(0, 0, 0, 0));
-	}
 };
 
 GameRectObject::~GameRectObject(){ 

@@ -6,5 +6,5 @@ enum Flag {
 	deadly = (1 << 2),
 	outlineOnly = (1 << 3),
 	invertsGravityPlayer = (1 << 4),
-	invertsGravityObject = (1 << 4),
+	invertsGravityObject = (1 << 5),
 };

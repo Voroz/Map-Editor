@@ -163,7 +163,7 @@ void Ui::update() {
 		ImGui::Checkbox("deadly", &_deadly);
 		ImGui::Checkbox("outlineOnly", &_outlineOnly);
 		ImGui::Checkbox("invertsGravityPlayer", &_invertsGravityPlayer);
-		ImGui::Checkbox("invertsGravityObject", &_invertsGravityPlayer);
+		ImGui::Checkbox("invertsGravityObject", &_invertsGravityObject);
 	}
 	if (_objectType == 1) {
 		ImGui::Text("\n");

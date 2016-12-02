@@ -7,7 +7,8 @@ Ui::Ui(sf::RenderWindow& window, Map &map){
 	_fallsWhenTouched = false;
 	_deadly = false;
 	_outlineOnly = false;
-	_invertsGravity = false;
+	_invertsGravityPlayer = false;
+	_invertsGravityObject = false;
 	_objectSize[0] = 50;
 	_objectSize[1] = 50;
 	_worldSize[0] = 8000;
@@ -161,7 +162,8 @@ void Ui::update() {
 		ImGui::Checkbox("fallsWhenTouched", &_fallsWhenTouched);
 		ImGui::Checkbox("deadly", &_deadly);
 		ImGui::Checkbox("outlineOnly", &_outlineOnly);
-		ImGui::Checkbox("invertsGravity", &_invertsGravity);
+		ImGui::Checkbox("invertsGravityPlayer", &_invertsGravityPlayer);
+		ImGui::Checkbox("invertsGravityObject", &_invertsGravityPlayer);
 	}
 	if (_objectType == 1) {
 		ImGui::Text("\n");
@@ -172,7 +174,8 @@ void Ui::update() {
 	}
 	ImGui::End();
 
-	_flags = _fallsWhenTouched * Flag::fallsWhenTouched | _deadly * Flag::deadly | _outlineOnly * Flag::outlineOnly | _invertsGravity * Flag::invertsGravity;
+	_flags = _fallsWhenTouched * Flag::fallsWhenTouched | _deadly * Flag::deadly | _outlineOnly * Flag::outlineOnly
+		| _invertsGravityPlayer * Flag::invertsGravityPlayer | _invertsGravityObject * Flag::invertsGravityObject;
 }
 void Ui::render() {
 	ImGui::Render();
